@@ -205,6 +205,12 @@ jobs:
           curl -sf http://127.0.0.1:19333/health | grep -q computerId
           TOKEN=$(cat "$RUNNER_TEMP/codync/token")
           curl -sf -X POST -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d '{}' http://127.0.0.1:19333/api/refreshBackends
+      - name: Update feed
+        working-directory: apps/desktop/dist
+        # Windows bundles the host like the Mac: PCs with iPhones wait until the App Store has the app it needs.
+        run: |
+          MIN_APP=$(win-unpacked/resources/codync-host.exe compat | node -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).minApp')
+          printf 'minApp: %s\n' "$MIN_APP" >> latest.yml
       - uses: actions/upload-artifact@v4
         if: "!startsWith(github.ref, 'refs/tags/')"
         with:

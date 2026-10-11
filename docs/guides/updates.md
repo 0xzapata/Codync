@@ -7,8 +7,8 @@ A client and a host on versions that can't work together say which one to update
 
 Release builds update through electron-updater from GitHub releases
 (`apps/desktop/src/main/updates.ts`). Open **Settings → Updates** in the menu bar
-to check for a release, enable scheduled checks, or opt into automatic downloads
-and installation. The chat window's Settings has the same **Check for updates**
+to check for a release, turn scheduled checks off, or turn off automatic downloads
+and installation (both on by default). The chat window's Settings has the same **Check for updates**
 action on its Updates page. Only packaged `main` builds update: `npm run dev` and builds made
 with `tools/account-config.mjs dev` never replace themselves with a release.
 
@@ -16,7 +16,7 @@ The app checks daily (hourly while a release waits for the iPhone app, below).
 Automatic installation waits until no Codync window is focused, there has been no
 keyboard/mouse input for ten minutes, and the local host reports that it is idle.
 A staged update also installs when quitting. Manual installation can interrupt work.
-A release whose `latest-mac.yml` names a `minApp` newer than the App Store's iPhone
+A release whose `latest-mac.yml` (`latest.yml` on Windows) names a `minApp` newer than the App Store's iPhone
 app waits while an iPhone is paired with this host.
 
 Before replacement on macOS, Codync unregisters its screen helper and stops the host
@@ -142,8 +142,10 @@ codync-host update --auto off
 
 Use `--port` for a host on a nondefault port. `--force` explicitly allows a manual
 update to interrupt bots. Stop a manually launched host before replacing it.
-Automatic updates require an installed background service and are off by default.
-They check daily while idle; failures are reported in update status.
+Automatic updates are on by default (`--auto off` turns them off) for a release
+binary that the installed background service runs; Homebrew and app-bundled hosts
+update through their owners. They check daily while idle; failures are reported in
+update status.
 
 The TUI's action
 list (`^k`) has **Check for updates**, which reports the result in the status line.
