@@ -29,7 +29,7 @@ Settings anytime. The public promise lives in `web/app/privacy/page.tsx`: keep i
   `clientNonce`, e.g. a phone replaying after a reconnect) is not counted again. Bot actors
   report `turn_finished` when an agent's turn ends. `client` is `local` (desktop app, terminal UI)
   or `remote` (phones). Each event carries its own `timestamp` and `uuid` (a resent batch counts
-  once) and the computer's `host_id`; batches go to `/batch/` every 30 s and once more when the
+  once) and the computer's key (`computer`, a hash of its id); batches go to `/batch/` every 30 s and once more when the
   host stops.
 - **Desktop** reports app-level events through the loopback-only `track` method
   (`app_opened`, `onboarding_completed` when the welcome screen is finished, `signed_in`,
@@ -54,15 +54,16 @@ Besides `env`, `app_version`, `$os`, `$lib`:
 | `voice_call_finished` | `seconds` |
 | `connector_installed` | `connector` (catalog name or `custom`) |
 | `skill_installed` | `custom` |
-| `computer_paired` | `via` (`qr`/`account`) |
-| every host event | `client` (`local`/`remote`), `host_id`, `arch` |
+| `computer_paired` | `via` (`qr`/`account`), `computer` |
+| every host event | `client` (`local`/`remote`), `computer`, `arch` |
 
 ## Metrics
 
 Shared filters: `env = 'main'`, internal accounts excluded, UTC days. A *user* is a PostHog
 person: the account when signed in, otherwise one install, so an anonymous iPhone and an
 anonymous computer are two users until both sign in. Messages are recorded by the computer,
-so an anonymous iPhone's chats count for its computer.
+so an anonymous iPhone's chats count for its computer. To count people rather than devices,
+join an iPhone's `computer_paired` to the computer's events on `computer` in SQL.
 
 | Metric | Definition |
 |---|---|
