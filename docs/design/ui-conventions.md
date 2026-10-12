@@ -107,8 +107,7 @@ The iPhone conversation navigation title includes a compact second line with the
 UI changes apply to iOS SwiftUI (`apps/ios/`, `apps/ios/Kit/Sources/CodyncUI/`), the
 desktop app (`apps/desktop/src/renderer/`) and the terminal client (`host/src/tui/`)
 together. Use each platform's controls while preserving the same actions, information
-and states. The desktop app was ported view by view from the SwiftUI Mac app and
-carries its behavior; the October 2026 parity changes brought the TUI up to it.
+and states.
 
 - Chat and threads show the latest non-final agent segment only while that lane is
   working and connected. Earlier narration, tools, empty text and `(pass)` stay out

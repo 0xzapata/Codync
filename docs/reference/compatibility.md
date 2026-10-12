@@ -24,8 +24,7 @@ On every (re)connect the client reads `hello` and decides, in this order:
 
 Versions compare as `major.minor.patch` (a leading `v` and any `-pre`/`+build` suffix are
 ignored). An unreadable version, or a `hello` without one, never blocks: an unknown is not a
-reason to lock someone out. Hosts from before 2.4.0 send no `minApp`; only the client's
-floor applies to them.
+reason to lock someone out.
 
 ## What each client does
 

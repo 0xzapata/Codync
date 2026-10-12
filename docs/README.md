@@ -31,6 +31,7 @@ Source review, a passing build, local integration tests and production acceptanc
 - [Remote screen](features/remote-screen.md)
 - [Marketplace and agent setup](features/marketplace.md)
 - [Connector setup and credentials](features/connector-credentials.md)
+- [Routines](features/routines.md)
 - [Widgets, Live Activities and onboarding](design/mobile-widgets.md)
 - [Notifications and background Live Activity updates](design/push-and-live-activity.md)
 
@@ -60,13 +61,3 @@ Service-local entry points remain in [cloud/README.md](../cloud/README.md) and [
 6. Record verification scope and limitations. Do not turn an old test report or historical audit into a current passing status.
 
 [Archived plans and audits](archive/README.md) retain earlier decisions and review context. Their original dates, line numbers and proposed APIs are historical.
-
-## Documentation validation — 2026-09-26
-
-- Checked 27 Markdown files and 112 local link targets; none were missing.
-- Shared fixture SHA-256 is unchanged; the Python generator reproduced it byte for byte.
-- Focused fixture/crypto checks passed: Swift 14 tests; Rust 12 tests across library/binary targets; Cloudflare vectors/relay 43 tests.
-- `git diff --check` passed. These checks validate the documentation move and its executable consumers, not the deployed Cloudflare path.
-- Wrangler reported a production route placement warning; see [environment readiness](guides/environments-and-deployment.md). Deployed-device acceptance remains separate.
-
-- [Routines](features/routines.md): scheduled and webhook-triggered bot work, Apple UI, execution history and reference parity.

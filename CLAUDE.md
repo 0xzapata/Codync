@@ -33,7 +33,7 @@ Bot-based remote for coding agents: persistent named bots on your computer, mess
 - Environments: `iOS Dev` / desktop `dist:*:dev` use the isolated Codync Dev app; `iOS` / `dist:*:main` retain production identities. Stop only the variant being rebuilt. Resource map, signing and diagnostics: [Dev app isolation](docs/guides/dev-app.md).
 - Push: iOS registers its APNs token with `relay/` → gets an AES-GCM ticket → gives it (plus its X25519 push key) to the host; the host seals title/body to that key and a Notification Service Extension opens it, so `relay/` sees only generic text. Alert kinds: *needs you*, *done*, and *failed*, suppressed while the iOS app is connected. Delivery and lifecycle: [notification design](docs/design/push-and-live-activity.md).
 - Voice call (iPhone, desktop): on-device speech (macOS desktop: the `codync-speech` helper), or OpenAI / Gemini realtime on the user's own key (kept in the host's vault, which mints per-call credentials; audio goes device ↔ provider); the host sees plain messages. Grok-style call bar: [docs/features/voice-call.md](docs/features/voice-call.md).
-- Analytics: opt-in PostHog, asked once per device, feature use only (never content); host events come from `api::dispatch`: [docs/features/analytics.md](docs/features/analytics.md).
+- Analytics: PostHog, on by default (off in each device's Settings), feature use only (never content); host events come from `api::dispatch`: [docs/features/analytics.md](docs/features/analytics.md).
 - Usage: local only — `claude -p /usage --no-session-persistence`, the Claude status line (`codync-host statusline`, wrapping any existing one), Claude ACP `usage_update` rate-limit meta, Codex rollout files. Never call provider APIs with agent credentials.
 - The desktop app is thin: the Mac build bundles `codync-host` in `Contents/Resources` (Linux uses the installed host) and installs it as a launchd/systemd agent via `codync-host install`; the menu bar/tray shows status/pairing/usage and opens the chat window. Not sandboxed, not Mac App Store (the host must spawn CLIs).
 
@@ -53,9 +53,13 @@ Bot-based remote for coding agents: persistent named bots on your computer, mess
 
 ## Installing a new build: kill the old one first
 
-Always stop the old desktop app, host and iPhone process before running a new build (old host = old protocol, old app = old UI); commands in [docs/guides/development.md](docs/guides/development.md#apple-apps).
+Always stop the old desktop app, host and iPhone process before running a new build (old host = old protocol, old app = old UI); commands in [development: desktop app](docs/guides/development.md#desktop-app) and [iOS app](docs/guides/development.md#ios-app).
 
 Keep only the latest build: in this checkout, Apple builds go to `build/dd` only (no other `-derivedDataPath`, no copies in scratchpads, `/tmp` or Xcode's DerivedData); delete any older Codync build right away, so macOS never launches a stale copy. A git worktree may keep its own single build inside that worktree.
+
+## End-to-end test every change
+
+After every change, test it end to end on the real apps, not just builds and unit tests: install the new build (old one stopped first) and walk through the changed flow. Drive the desktop app with Computer Use, and the iPhone app on an iOS Simulator through Device Hub (Xcode's `DeviceHub.app`). Report any check that could not run and why.
 
 ## Project generation
 
