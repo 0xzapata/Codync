@@ -32,11 +32,7 @@ the section; Move up/down accessibility actions are also available. The desktop
 app supports heading drags and Alt+Up/Down on macOS, Linux and Windows.
 The terminal UI connects to one host, so it has no cross-computer ordering.
 
-The account computer-order API has been removed. Migration
-`0004_computer_order.sql` remains as already-deployed schema history; its column is
-unused. Updating clients stops them from reading or writing remote order immediately,
-without requiring a cloud deployment. Removing the endpoint from an existing Worker
-requires deploying the updated cloud code separately.
+The order never leaves the device: the cloud stores no computer order.
 
 ## Bot order
 

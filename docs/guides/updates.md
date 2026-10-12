@@ -123,8 +123,9 @@ move to the desktop app; 2.7.1 is the first release they accept. Support ends
 need a manual download of the desktop app. Remove together:
 
 - the Sparkle part of **Update feeds** in `.github/workflows/release-desktop.yml`
-  (`generate_appcast`, `annotate-appcast.py`, `verify-appcast.py`) and `appcast.xml`
-  in **Publish**
+  (`generate_appcast`, `annotate-appcast.py`, `verify-appcast.py`) and `build/appcast.xml`
+  in the macOS artifact upload and in **Publish** (keep the step's `minApp` line for
+  `latest-mac.yml`, electron-updater reads it)
 - `SUPublicEDKey` in `apps/desktop/electron-builder.yml`
 - `packaging/updates/annotate-appcast.py`, `verify-appcast.py`, `macos-public-key.txt`
 - the `SPARKLE_PRIVATE_KEY` secret (row below) and the appcast mentions in
