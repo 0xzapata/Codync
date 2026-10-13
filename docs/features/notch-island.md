@@ -5,27 +5,45 @@ MacBook it grows out of the notch; on a Mac without a notch, and on Windows and 
 from the top edge. It draws Codync's own bot characters.
 
 Turn it on or off in **Settings → General → System** (*Show in notch* on macOS, *Show at top
-of screen* elsewhere) or the menu bar / tray menu's **Settings**. It is on by default. The
+of screen* elsewhere) or the menu bar / tray menu's **Settings**. It is off by default while it
+is experimental. The
 setting belongs to the desktop installation (`showIsland` in `host-prefs.json`).
 
 ## What it shows
 
-| State | When | Shape |
+Open, the island is 640 pt wide, with a header of tabs beside the notch
+(Bots, Message a bot, Usage, New bot; the working count, a usage meter and Open Codync on the
+right) over a card. The card holds the bot in focus as a big character with a glow and a state
+badge; alerts tint the card from the bottom (amber, green, red). The other bots sit in a column
+on the right.
+
+Codync's own parts: the dot-grid bot characters (no mascot), the thinking orb as the working
+badge, the usage meter and Usage tab (the tightest local plan limit, every limit with its reset;
+amber from 70 %, red from 90 %, like the menu bar), messaging a bot from the island, and ⌥Y / ⌥N.
+
+| State | When | What it shows |
 |---|---|---|
 | Hidden | No bot works or waits | Invisible over the notch (a thin strip at a plain top edge still wakes it) |
-| Compact | A bot works or needs you | The notch widened: the bot in focus on the left; on the right an orb, how many work, or an amber dot when one needs you |
-| Bots | The pointer rests on the island (250 ms, 600 ms over the bare notch) or a click | Up to six bots, working and waiting first, with their current step. A row opens the conversation |
-| Approval | A permission card is pending | The bot, what it wants, the command, and the card's options (Allow once, Always allow, Deny…). Open conversation and Later (fold until the island is opened again or another card arrives) |
-| Finished | A bot stops working | "*Bot* is done" or "failed" with its last message, for 4 s |
+| Peek | The pointer reaches the bare notch | The notch a little wider, the bot in focus peeking out; opens after 650 ms |
+| Compact | A bot works or needs you | The notch widened: the bot in focus with its badge on the left, the others (or an orb) on the right |
+| Overview | Pointer rest or a click, bots working | The bot in focus with its last three tool calls (newest brightest) and the other bots as pills; each opens its conversation |
+| Nothing running | Opened with no bot working | "Nothing running right now." and Message a bot |
+| Approval | A permission card is pending | The command and the card's options, deny left and Allow once right (⌥N / ⌥Y from any app while it shows) |
+| Finished | A bot stops working | "*Bot* is done" with its last message, Open conversation / OK, for 5.2 s |
+| Failed | A bot stops on an error | "*Bot* stopped." with the error in red, until OK |
+| Message a bot | The header's bubble | The bot chip (click for the next bot) and a field; Enter sends, Esc closes |
+| Usage | The header's gauge or the usage meter | Claude and Codex limits side by side: each window's bar, percent and reset |
 
-The island folds 500 ms after the pointer leaves it, or 8 s after it was opened without the
-pointer on it (VoiceOver). A pending approval stays open until it is answered, expires or is
-put off; answering folds the island. Answers go through the same `respondPermission` call as the
-chat's permission card.
+Opened by hover, the island folds 0.8 s after the pointer leaves; opened by a click or a tab,
+10 s after (a 2 pt line counts down). The message field stays until it sends, Esc or a click in
+another app. An approval opens by itself and stays until answered; the Bots tab puts it off
+until another arrives. Answers and messages go through the chat window (`respondPermission`,
+`send`), like the chat's own cards and composer. The states, sizes and motion are drawn in the
+design canvas the island was built from.
 
 ## How it works
 
-- **Window** (`apps/desktop/src/main/island.ts`): a fixed 720 × 360 transparent, frameless,
+- **Window** (`apps/desktop/src/main/island.ts`): a fixed 720 × 300 transparent, frameless,
   non-focusable window at the top center of the notch's display (else the main display). macOS:
   a non-activating panel at the main-menu level + 3, so it covers the menu bar, every Space and
   full-screen apps. Windows: a toolbar window (out of Alt+Tab). It never resizes; the shape
@@ -44,8 +62,10 @@ chat's permission card.
 - **Data**: the chat window owns the stores. `useIslandSummary` (next to the tray's summary)
   sends bots and pending permission cards when they change; the island window renders them
   (`views/island/`, state in `IslandModel`, pure rules in `shared/island.ts`). Buttons travel back
-  as `WindowCommand`s (`openBot`, `respondPermission`) to the chat window, which calls the host.
-  The island has no host connection of its own.
+  as `WindowCommand`s (`openBot`, `respondPermission`, `sendMessage`) to the chat window, which
+  calls the host. The island has no host connection of its own. It takes the keyboard only while
+  the message field is open (`setFocusable`); ⌥Y / ⌥N are global shortcuts only while an
+  approval shows.
 
 ## Platforms and other clients
 
