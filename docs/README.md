@@ -29,6 +29,7 @@ Source review, a passing build, local integration tests and production acceptanc
 - [Voice calls](features/voice-call.md)
 - [File attachments](features/file-attachments.md)
 - [Remote screen](features/remote-screen.md)
+- [Notch island (desktop)](features/notch-island.md)
 - [Marketplace and agent setup](features/marketplace.md)
 - [Connector setup and credentials](features/connector-credentials.md)
 - [Routines](features/routines.md)
