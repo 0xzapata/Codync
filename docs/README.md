@@ -14,6 +14,7 @@ Source review, a passing build, local integration tests and production acceptanc
 | Test a phone over Cloudflare instead of LAN | [Cloudflare testing](guides/cloudflare-testing.md) |
 | Configure dev/main or deploy the services | [Environments and deployment](guides/environments-and-deployment.md) |
 | Run the host on a Linux server or cloud VM | [Linux servers](guides/linux-servers.md) |
+| Plan a personal deployment on Agent37 | [Agent37 integration proposal](architecture/agent37-integration-plan.md) |
 | Set up accounts, approvals or desktop SSH | [Accounts and SSH](guides/accounts-and-ssh.md) |
 | Change transport or cryptography | [Remote protocol](reference/remote-relay.md) and [shared vectors](reference/fixtures/README.md) |
 | Change what the host and clients exchange | [Client and host compatibility](reference/compatibility.md) |
