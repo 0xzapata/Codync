@@ -40,6 +40,11 @@ until another arrives. Answers and messages go through the chat window (`respond
 `send`), like the chat's own cards and composer. The states, sizes and motion are drawn in the
 design canvas the island was built from.
 
+Every open view is the same size, so switching tabs or an alert taking over never moves the
+black shape: the next view cross-fades over the last. When another bot takes the focus it
+springs in out of a blur, a bot joining the pills or the column does the same, and the others
+slide to their new places.
+
 ## How it works
 
 - **Window** (`apps/desktop/src/main/island.ts`): a fixed 720 × 300 transparent, frameless,
@@ -62,9 +67,10 @@ design canvas the island was built from.
   sends bots and pending permission cards when they change; the island window renders them
   (`views/island/`, state in `IslandModel`, pure rules in `shared/island.ts`). Buttons travel back
   as `WindowCommand`s (`openBot`, `respondPermission`, `sendMessage`) to the chat window, which
-  calls the host. The island has no host connection of its own. It takes the keyboard only while
-  the message field is open (`setFocusable`); ⌥Y / ⌥N are global shortcuts only while an
-  approval shows.
+  calls the host. The island has no host connection of its own. It takes the keyboard when
+  the message field opens (`setFocusable`) and gives it back once the island has folded
+  (giving it back takes the window off screen for a moment on macOS); ⌥Y / ⌥N are global
+  shortcuts only while an approval shows.
 
 ## Platforms and other clients
 
