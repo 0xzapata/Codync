@@ -6,8 +6,7 @@ from the top edge. It draws Codync's own bot characters.
 
 Turn it on or off in **Settings → General → System** (*Show in notch* on macOS, *Show at top
 of screen* elsewhere) or the menu bar / tray menu's **Settings**. It is off by default while it
-is experimental. The
-setting belongs to the desktop installation (`showIsland` in `host-prefs.json`).
+is experimental. The setting belongs to the desktop installation (`showIsland` in `host-prefs.json`).
 
 ## What it shows
 
@@ -17,9 +16,9 @@ right) over a card. The card holds the bot in focus as a big character with a gl
 badge; alerts tint the card from the bottom (amber, green, red). The other bots sit in a column
 on the right.
 
-Codync's own parts: the dot-grid bot characters (no mascot), the thinking orb as the working
-badge, the usage meter and Usage tab (the tightest local plan limit, every limit with its reset;
-amber from 70 %, red from 90 %, like the menu bar), messaging a bot from the island, and ⌥Y / ⌥N.
+The working badge is Codync's thinking orb. The usage meter and the Usage tab show the tightest
+local plan limit and every limit with its reset (amber from 70 %, red from 90 %, like the menu
+bar). A bot can be messaged from the island, and ⌥Y / ⌥N answer an approval from any app.
 
 | State | When | What it shows |
 |---|---|---|
