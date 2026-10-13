@@ -209,12 +209,13 @@ show persistent labels; the TUI has no credential-manager page or modal-card lay
 so this desktop presentation change does not affect its keyboard workflow.
 Desktop styling is shared across macOS, Linux and Windows.
 
-Desktop modal sheets and confirmation dialogs use one subtle 1px outer outline,
-including Apps, Credentials, and Settings. The outline follows the existing corner
-radius and overlays the content without changing layout or intercepting input.
-This is an explicit exception to the filled-surface border rule. iOS keeps the
-system sheet's own edge treatment; terminal dialogs retain their existing character
-borders. Neither receives an extra desktop-style outline.
+Desktop modal sheets, confirmation dialogs and menus (dropdown and right-click
+menus, the account and action panels) use one subtle 1px outer outline, including
+Apps, Credentials, and Settings. The outline follows the existing corner radius and
+overlays the content without changing layout or intercepting input. This is an
+explicit exception to the filled-surface border rule. iOS keeps the system sheet's
+and system menu's own edge treatment; terminal dialogs retain their existing
+character borders. Neither receives an extra desktop-style outline.
 
 The desktop sidebar computer filter shares the toolbar's subtle outline and 32px
 height, with a capsule enclosing both the computer glyph and its chevron. This

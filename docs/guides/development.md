@@ -80,18 +80,25 @@ Unlock the phone when required. Build, install, launch, and visual inspection ar
 | Cloud integration | `cd cloud && env -u CODYNC_CLOUD npm run e2e` | Built host; see [Cloudflare testing](cloudflare-testing.md) |
 | APNs relay | `cd relay && npm ci && npm test && npm run typecheck` | Separate package from `cloud/` |
 
-### Screen helpers
+### Pre-commit checks
 
-Enable the repository's staged-file checks once per checkout:
+Enable the repository's pre-commit hook once per checkout:
 
 ```sh
 git config core.hooksPath .githooks
 ```
 
-When a screen helper changes, the pre-commit hook checks Linux Rust formatting
-and parses the macOS Swift sources (on macOS). The platform builds remain in
-GitHub Actions: Linux requires GStreamer development packages, and macOS builds
-the `Screen` Xcode target against WebRTC.
+It runs CI's checks for each part a commit touches, so a failure shows up before the push:
+host (`cargo fmt --check`, clippy, `cargo test` and the memory tests, with CI's pinned Engram
+fetched once into `host/target/engram-test-runtime`), desktop, cloud and relay (`npm run typecheck`,
+`npm test`), Linux screen helper formatting, and a parse of the macOS screen helper's Swift
+sources (on macOS). It checks the staged files only, in a copy under `.git/precommit-snapshot`,
+so other agents' uncommitted edits in the same checkout neither break nor rescue a commit; the
+host builds into `host/target/precommit`. The npm checks reuse each package's `node_modules`
+(run `npm ci` there first).
+
+Left to CI: the iOS Kit tests (an iPhone simulator) and the platform builds (Linux screen
+helper: GStreamer development packages; macOS: the `Screen` Xcode target against WebRTC).
 
 Host development: `cargo run --manifest-path host/Cargo.toml -- serve`. Avoid competing with an installed host on port 19222; isolated tests should use a temporary `CODYNC_HOME` and another port. Stop test hosts when finished.
 

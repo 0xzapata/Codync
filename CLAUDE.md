@@ -89,7 +89,7 @@ Build targets, folder layout, file naming and shared terms: [docs/architecture/f
 
 ## Commit messages
 
-Follow the Conventional Commit and PR rules in [AGENTS.md](AGENTS.md#commit--pull-request-guidelines); stage only your own changes.
+Follow the Conventional Commit and PR rules in [AGENTS.md](AGENTS.md#commit--pull-request-guidelines); stage only your own changes. The pre-commit hook (`git config core.hooksPath .githooks`) runs CI's checks for the parts a commit touches ([pre-commit checks](docs/guides/development.md#pre-commit-checks)); fix what it reports instead of `--no-verify`.
 
 ## Keeping this file short
 
