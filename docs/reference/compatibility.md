@@ -108,7 +108,7 @@ trails them (App Store review), so nudging a computer from it would only be nois
 | Client | This app is behind |
 |---|---|
 | iPhone | Card at the top of the bot list (App Store version from the lookup), *Update* opens the App Store |
-| Desktop | *Update to <version>* in the menu bar's Settings → Updates and on the Settings Updates page |
+| Desktop | *Update to <version>*, then *Restart to update*, on the update card, in the menu bar's Settings → Updates and on the Settings Updates page |
 | Terminal client | — (it is the host binary) |
 
 ### Wire shape snapshot
