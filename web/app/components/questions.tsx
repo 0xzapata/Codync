@@ -1,4 +1,4 @@
-import { Plus } from "@phosphor-icons/react/ssr";
+import { DiscordLogo, Plus } from "@phosphor-icons/react/ssr";
 import Reveal from "./reveal";
 import { DISCORD } from "../links";
 
@@ -63,9 +63,10 @@ export default function Questions() {
           </p>
           <a
             href={DISCORD}
-            className="mt-6 inline-block font-medium text-neutral-200 underline underline-offset-4 hover:text-white"
+            className="mt-6 inline-flex items-center gap-2 font-medium text-neutral-200 hover:text-white"
           >
-            Ask on Discord
+            <DiscordLogo size={20} />
+            <span className="underline underline-offset-4">Ask on Discord</span>
           </a>
         </Reveal>
         <Reveal delay={0.05}>
