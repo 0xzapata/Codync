@@ -24,9 +24,14 @@ reminder card, so its decorative icon treatment is iPhone-only.
 
 Release update controls live in the tray's Settings → Updates submenu; the chat
 window's Settings has the same controls on its Updates page (**Check for updates**,
-which becomes **Update to <version>** once a release is found). The TUI action list
-has **Check for updates**. Download and install go through electron-updater
-(`apps/desktop/src/main/updates.ts`); there is no separate update window.
+which becomes **Update to <version>** once a release is found). Choosing that
+replaces the button with a capsule that fills and shows the percent. When
+**Automatically download and install** is off, the finished download becomes
+**Restart** in the same place. The tray item shows that percent as text, because
+it is a system menu. The TUI action list has **Check for updates** for the host
+updater, which has no download capsule. Download and install of the desktop app
+go through electron-updater (`apps/desktop/src/main/updates.ts`); there is no
+separate update window.
 
 The tray menu is Electron's native `Menu` (`apps/desktop/src/main/tray.ts`), the only system menu in the desktop app. Its commands, submenus, checkboxes, usage-icon radio items, separators and keyboard navigation use system styling. Do not add custom cards, hover backgrounds, icon buttons or a window-style menu panel here.
 

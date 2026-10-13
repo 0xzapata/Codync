@@ -9,8 +9,15 @@ Release builds update through electron-updater from GitHub releases
 (`apps/desktop/src/main/updates.ts`). Open **Settings → Updates** in the menu bar
 to check for a release, turn scheduled checks off, or turn off automatic downloads
 and installation (both on by default). The chat window's Settings has the same **Check for updates**
-action on its Updates page. Only packaged `main` builds update: `npm run dev` and builds made
-with `tools/account-config.mjs dev` never replace themselves with a release.
+action on its Updates page. Once a release is found, that action becomes **Update to <version>**.
+Choosing it downloads the release in the button's place: the capsule fills and shows the percent.
+With **Automatically download and install** on, Codync restarts into the update when the download
+finishes (immediately if you started the check, or once the app is idle if the check was scheduled).
+With it off, the capsule becomes **Restart**, and the update installs when you choose that or quit.
+The menu bar item shows the same percent as text (**Downloading 42%…**, then **Restart to Update…**),
+because a system menu cannot draw the capsule. The iPhone app updates from the App Store, and the
+terminal client updates the host, so neither shows this download. Only packaged `main` builds update:
+`npm run dev` and builds made with `tools/account-config.mjs dev` never replace themselves with a release.
 
 The app checks daily (hourly while a release waits for the iPhone app, below).
 Automatic installation waits until no Codync window is focused, there has been no
