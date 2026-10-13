@@ -1,6 +1,6 @@
 import { Plus } from "@phosphor-icons/react/ssr";
 import Reveal from "./reveal";
-import { GITHUB } from "../links";
+import { DISCORD } from "../links";
 
 const questions: [string, string][] = [
   [
@@ -62,10 +62,10 @@ export default function Questions() {
             Short answers about price, setup, agents and your data.
           </p>
           <a
-            href={`${GITHUB}/issues`}
+            href={DISCORD}
             className="mt-6 inline-block font-medium text-neutral-200 underline underline-offset-4 hover:text-white"
           >
-            Ask something else
+            Ask on Discord
           </a>
         </Reveal>
         <Reveal delay={0.05}>
