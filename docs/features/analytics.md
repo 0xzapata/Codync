@@ -18,7 +18,9 @@ lives in `web/app/privacy/page.tsx`: keep it true.
   user id. Otherwise a random install id (the host id on a computer, a UUID on the iPhone).
   The first signed-in event sends `$identify` with `$anon_distinct_id` so earlier events join
   the account.
-- **No IP or location**: the project discards client IPs and every event sets `$geoip_disable`.
+- **Location, never the IP.** The project's GeoIP transformation turns the sender's IP into an
+  approximate location (`$geoip_country_name`, `$geoip_city_name`, …), then the project's
+  *Discard client IP data* drops the IP before storage.
 - `env` is `main` or `dev`; filter dev out in PostHog.
 
 ## Where events come from
@@ -80,4 +82,5 @@ join an iPhone's `computer_paired` to the computer's events on `computer` in SQL
 
 No client asks: sharing starts with the first launch. Every client has the same switch,
 *Share usage analytics* (iPhone and desktop Settings → Privacy, terminal UI `^k`). The App
-Store privacy label declares *Product Interaction*, linked to the user, not used for tracking.
+Store privacy label declares *Product Interaction* and *Coarse Location*, linked to the user, not used
+for tracking (the same two in `apps/ios/Resources/PrivacyInfo.xcprivacy`).

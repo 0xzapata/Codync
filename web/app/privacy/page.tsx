@@ -8,7 +8,7 @@ export default function Privacy() {
     <main className="flex-1 flex flex-col items-center px-6 py-16">
       <article className="max-w-2xl w-full space-y-6">
         <h1 className="text-3xl font-bold text-white">Privacy Policy</h1>
-        <p className="text-neutral-400 text-sm">Last updated: October 12, 2026</p>
+        <p className="text-neutral-400 text-sm">Last updated: October 13, 2026</p>
 
         <Section title="Overview">
           Codync lets you message the AI agents that run on your own computer. It is built so that your files, conversations and credentials stay on your devices.
@@ -33,7 +33,7 @@ export default function Privacy() {
           </p>
           <ul className="list-disc pl-5 space-y-2">
             <li><strong>What we record:</strong> which features you use, such as opening the app, creating or deleting a bot, sending a message (with the number of attachments, not the files), starting a routine or a voice call, and installing a connector from the catalog. Each event carries the app version, the platform and the agent and model a bot uses.</li>
-            <li><strong>What we never record:</strong> your messages, prompts, code, files, file names or paths, bot names, credentials or anything your agents produce. We don&apos;t store your IP address or location.</li>
+            <li><strong>What we never record:</strong> your messages, prompts, code, files, file names or paths, bot names, credentials or anything your agents produce. We don&apos;t store your IP address: it is only used to look up your approximate location (country and city), which is kept with the events.</li>
             <li><strong>Who it&apos;s linked to:</strong> your Codync account when you&apos;re signed in; otherwise a random ID created on that device.</li>
             <li><strong>Why:</strong> to spot bugs sooner and serve you better, by seeing which features work and where people get stuck. It is never sold, never shared for advertising and never used to track you across other apps or websites.</li>
           </ul>
