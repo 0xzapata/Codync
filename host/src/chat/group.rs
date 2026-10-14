@@ -27,6 +27,8 @@ const MAX_ROUNDS: usize = 3;
 const MAX_REPLIES: usize = 10;
 /// Room lines a member is shown per turn.
 const HISTORY_LINES: i64 = 24;
+/// Bound routing reads independently of the shorter prompt history.
+const MAX_ROUTING_LINES: i64 = 4096;
 /// A bot's line in another member's prompt is clipped (the user's never is).
 const LINE_CHARS: usize = 2000;
 const PASS: &str = "(pass)";
@@ -180,9 +182,20 @@ fn members(hub: &Hub, group: &BotConfig) -> Vec<BotConfig> {
 
 /// The lane's messages since the user last wrote there, that message included.
 fn since_last_user_message(hub: &Hub, lane: &Lane) -> Result<Vec<Entry>> {
-    let recent = hub.store.messages_after(lane, 0, HISTORY_LINES)?;
-    let start = recent.iter().rposition(|e| e.kind == EntryKind::User.as_str()).unwrap_or(0);
-    Ok(recent[start..].to_vec())
+    let mut limit = HISTORY_LINES;
+    loop {
+        let recent = hub.store.messages_after(lane, 0, limit)?;
+        if let Some(start) = recent.iter().rposition(|e| e.kind == EntryKind::User.as_str()) {
+            return Ok(recent.into_iter().skip(start).collect());
+        }
+        if recent.len() < usize::try_from(limit)? {
+            return Ok(recent);
+        }
+        if limit == MAX_ROUTING_LINES {
+            bail!("group routing history exceeds {MAX_ROUTING_LINES} lines without a user message");
+        }
+        limit = (limit * 2).min(MAX_ROUTING_LINES);
+    }
 }
 
 /// Who answers: the members @-mentioned since the user's last message, or everyone

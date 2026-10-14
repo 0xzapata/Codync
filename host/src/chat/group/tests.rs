@@ -1,6 +1,8 @@
 use super::*;
 use serde_json::json;
 
+mod history;
+
 fn bot(id: &str, name: &str) -> BotConfig {
     serde_json::from_value(json!({"id": id, "name": name, "backend": "claude", "cwd": "/tmp"})).expect("valid bot")
 }

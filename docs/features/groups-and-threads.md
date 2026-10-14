@@ -52,6 +52,9 @@ replies itself.
   alone if still a member. Main chat, user-started threads, and roots with a missing or
   departed author keep the everyone fallback.
   Members speak one at a time; each round starts one member later.
+- Routing searches beyond the 24-line prompt window to the last user message. Reads
+  double up to 4096 messages; if that cap still contains no user message, the room turn
+  reports an error instead of silently routing from an incomplete history.
 - A group's `description` ("About") tells its members what the room is for.
 - A member runs the turn in its **own main session** (its history is unified across chats),
   told who's in the room and what was said since it last spoke there, framed as
