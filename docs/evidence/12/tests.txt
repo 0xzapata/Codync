@@ -1,8 +1,8 @@
-ℹ tests 147
+$ npm test                          # revision 4fd0b7c, apps/desktop
+ℹ tests 152
 ℹ suites 0
-ℹ pass 147
+ℹ pass 152
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2842.752209

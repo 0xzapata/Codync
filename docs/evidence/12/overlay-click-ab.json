@@ -1,0 +1,37 @@
+{
+  "ruleFound": {
+    "selector": ".modal-card:not(.shown), .dialog:not(.shown), .anchored:not(.shown)",
+    "text": ".modal-card:not(.shown), .dialog:not(.shown), .anchored:not(.shown) { pointer-events: none; }",
+    "sheetHref": null
+  },
+  "ruleRemovedForControl": true,
+  "restoredRule": ".modal-card:not(.shown), .dialog:not(.shown), .anchored:not(.shown) { pointer-events: none; }",
+  "beforeFix": {
+    "label": "rule removed (pre-fix behaviour)",
+    "menuOpen": true,
+    "during": {
+      "menuInDom": true,
+      "menuPE": "auto",
+      "sheetStillOpen": true,
+      "closeProbe": {
+        "reachable": false,
+        "hit": "div.anchored"
+      }
+    },
+    "sheetClosedByClickInFadeWindow": false
+  },
+  "afterFix": {
+    "label": "rule present (fixed)",
+    "menuOpen": true,
+    "during": {
+      "menuInDom": true,
+      "menuPE": "none",
+      "sheetStillOpen": true,
+      "closeProbe": {
+        "reachable": true,
+        "hit": "span"
+      }
+    },
+    "sheetClosedByClickInFadeWindow": true
+  }
+}
