@@ -2,6 +2,8 @@
 
 The Extensions screen configures capabilities installed on the selected computer. Account membership does not install the same capability on every computer.
 
+The desktop and iPhone installed count is labeled **Connectors & skills**, and opens a library with that same title. It includes connected apps (stored as connectors), but excludes agents; agents show their own installation status in the Agents section. The terminal already separates these categories and does not show a combined installed count.
+
 | Capability | Implementation | Behavior |
 | --- | --- | --- |
 | Agents | `host/src/agent/backends.rs`, `host/src/agent/registry.rs`, `host/src/agent/node.rs` | Detect installed harnesses, resolve ACP registry adapters, provide Node.js for npm agents |
