@@ -21,7 +21,8 @@ lives in `web/app/privacy/page.tsx`: keep it true.
 - **Location, never the IP.** The project's GeoIP transformation turns the sender's IP into an
   approximate location (`$geoip_country_name`, `$geoip_city_name`, …), then the project's
   *Discard client IP data* drops the IP before storage.
-- `env` is `main` or `dev`; filter dev out in PostHog.
+- `env` is `main` or `dev`; filter dev out in PostHog. Debug host builds (`cargo test`, `cargo run`)
+  send nothing: every e2e test starts a fresh host that would count as a new user.
 
 ## Where events come from
 
