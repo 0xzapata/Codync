@@ -36,16 +36,16 @@ when a change or a bug depends on Windows itself (paths, `cmd.exe`, `.cmd` shims
 
    ```powershell
    $t = Get-Content "$env:USERPROFILE\.codync\token"
-   Invoke-RestMethod -Method Post -Uri http://127.0.0.1:19222/api/backends `
+   Invoke-RestMethod -Method Post -Uri http://127.0.0.1:19222/api/refreshBackends `
      -Headers @{ Authorization = "Bearer $t" } -ContentType application/json -Body '{}'
    ```
 
    `createBot`, `send` and `history` cover most agent checks; a failed start shows up as an error
    notice in `history`. Host logs are under `%USERPROFILE%\.codync`.
-4. Agents: install each harness with the command its setup hint gives (Claude Code:
-   `irm https://claude.ai/install.ps1 | iex`). Adapters that come from npm (Claude, Codex, Gemini,
-   Qwen, …) also need Node.js (`winget install OpenJS.NodeJS`); agents shipped as binaries
-   (OpenCode, Grok) don't.
+4. Agents: *Install* in the agent sheet (or the CLI's own installer). Agents that come from npm
+   (Claude, Codex, Gemini, Qwen, …) don't need Node.js on the VM: without one, Codync downloads its
+   own into `%USERPROFILE%\.codync\node` (see [agent setup](../features/marketplace.md)). To test
+   the computer's own Node instead, `winget install OpenJS.NodeJS`.
 
 ## Limits
 

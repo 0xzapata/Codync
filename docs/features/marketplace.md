@@ -4,10 +4,12 @@ The Extensions screen configures capabilities installed on the selected computer
 
 | Capability | Implementation | Behavior |
 | --- | --- | --- |
-| Agents | `host/src/agent/backends.rs`, `host/src/agent/registry.rs` | Detect installed harnesses and resolve ACP registry adapters |
+| Agents | `host/src/agent/backends.rs`, `host/src/agent/registry.rs`, `host/src/agent/node.rs` | Detect installed harnesses, resolve ACP registry adapters, provide Node.js for npm agents |
 | Connectors | `host/src/market/mod.rs`, `registry.rs`, `install.rs` | Discover MCP servers or add one manually; install per computer; on for every bot unless a bot turns it off |
 | Connected apps | `host/src/market/composio.rs` | Expose connected Composio apps as connectors |
 | Skills | `host/src/market/skills.rs` | Instruction folders containing `SKILL.md`, stored under `~/.codync/skills/<id>`; on for every bot unless a bot turns it off |
+
+Agents never need Node.js installed first. Install for an npm CLI (Claude Code `@anthropic-ai/claude-code`, Codex `@openai/codex`, Pi) runs `codync-host npm install -g <package>` in a setup terminal: npm on the computer's own Node when it has one, else on Codync's. Codync's Node is the official build of a pinned version (`VERSION` and SHA-256s in `node.rs`), downloaded once into `~/.codync/node/<version>`; npm installs CLIs with it into `~/.codync/node/global`. Agents launched through `npx` (the Claude and Codex ACP adapters, Gemini, Qwen…) use the same Node, downloaded on their first start if missing. Both folders come last on the agent search path, so the computer's own Node and CLIs always win. Linux builds of Node need glibc: on musl distros (Alpine) install Node.js yourself.
 
 The Connectors shelf opens with a short featured list, then pages through the whole MCP Registry (`marketConnectors {search, cursor}` → `{items, nextCursor}`, 60 metadata records per API page; the UI initially shows 12 and reveals another 12 only when *Load more connectors* is pressed). Apps through Composio use the same 12-at-a-time display with *Load more apps*. Searching resets the visible batch; late responses from an older search are ignored. Scrolling never triggers another catalog fetch. Listed: stdio npm/PyPI/OCI/NuGet packages (the registry's runtime and package arguments become inputs) and streamable-HTTP or SSE remotes (URL `{variables}` become inputs). Not listed: MCPB bundles and packages that serve HTTP locally; add those as a custom connector.
 
