@@ -66,8 +66,8 @@ failed download reports the last stderr line that isn't an `npm notice`.
 ## Seen, not fixed
 
 - Without Node.js, an npx-only agent couldn't start at all, and its install hint named the harness
-  setup (Claude Code), which was already done. Resolved in the same release: Codync provides
-  Node.js itself and installs Claude Code and Codex with npm ([agent setup](../features/marketplace.md)).
+  setup (Claude Code), which was already done. Resolved in the same release: Extensions and the
+  agent's setup offer to add Codync's own Node.js ([agent setup](../features/marketplace.md)).
 - Every new bot on Windows posts `Memory is unavailable; … installing Engram: Access is denied.
   (os error 5)`.
 

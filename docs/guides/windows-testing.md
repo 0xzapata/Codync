@@ -42,10 +42,11 @@ when a change or a bug depends on Windows itself (paths, `cmd.exe`, `.cmd` shims
 
    `createBot`, `send` and `history` cover most agent checks; a failed start shows up as an error
    notice in `history`. Host logs are under `%USERPROFILE%\.codync`.
-4. Agents: *Install* in the agent sheet (or the CLI's own installer). Agents that come from npm
-   (Claude, Codex, Gemini, Qwen, …) don't need Node.js on the VM: without one, Codync downloads its
-   own into `%USERPROFILE%\.codync\node` (see [agent setup](../features/marketplace.md)). To test
-   the computer's own Node instead, `winget install OpenJS.NodeJS`.
+4. Agents: *Install* in the agent sheet runs the CLI's native installer. Agents whose ACP adapter
+   comes from npm (Claude, Codex, Gemini, Qwen, …) need Node.js: without one on the VM, Extensions
+   shows *Add Node.js*, which puts Codync's own copy in `%USERPROFILE%\.codync\node` (see
+   [agent setup](../features/marketplace.md)). To test the computer's own Node instead,
+   `winget install OpenJS.NodeJS`.
 
 ## Limits
 
