@@ -47,8 +47,14 @@ replies itself.
 
 - The user's message starts a *room turn* in its lane: up to 3 rounds, 10 replies in all.
 - Who answers each round: the members @-mentioned since the user's last message (full
-  name, name without spaces, or first word; `@all` / `@everyone`), or everyone if none is.
+  name, name without spaces, or first word), including mentions in later bot replies.
+  `@all` / `@everyone` invites everyone. Without mentions, a thread's root author answers
+  alone if still a member. Main chat, user-started threads, and roots with a missing or
+  departed author keep the everyone fallback.
   Members speak one at a time; each round starts one member later.
+- Routing searches beyond the 24-line prompt window to the last user message. Reads
+  double up to 4096 messages; if that cap still contains no user message, the room turn
+  reports an error instead of silently routing from an incomplete history.
 - A group's `description` ("About") tells its members what the room is for.
 - A member runs the turn in its **own main session** (its history is unified across chats),
   told who's in the room and what was said since it last spoke there, framed as

@@ -1,0 +1,16 @@
+test chat::group::tests::mentions_pick_responders_and_no_mention_means_everyone ... ok
+test chat::group::tests::pass_is_recognized_loosely ... ok
+test chat::group::tests::history::lane_without_a_user_message_keeps_all_available_mentions ... ok
+test chat::group::tests::history::line_30_of_40_keeps_the_user_and_later_bot_mentions ... ok
+test chat::group::tests::thread_owner_is_only_the_fallback_not_a_required_responder ... ok
+test chat::group::tests::history::mention_before_the_last_24_lines_is_not_lost ... ok
+test chat::group::tests::history::late_mentioned_member_gets_root_once_outside_the_prompt_window ... ok
+test chat::group::tests::history::newer_user_message_resets_mentions_and_other_lanes_do_not_count ... ok
+test chat::group::tests::history::routing_cap_returns_an_error_instead_of_guessing ... ok
+test chat::group::tests::stop_ends_the_room_turn_before_the_next_speaker ... ok
+test chat::group::tests::unmentioned_thread_reply_reaches_only_its_author ... ok
+test chat::group::tests::bot_mention_invites_another_member_in_round_two ... ok
+test chat::group::tests::threads_stay_out_of_the_main_chat_and_summarize_on_their_root ... ok
+test chat::group::tests::room_turns_follow_mentions_and_end_when_everyone_passes ... ok
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 269 filtered out; finished in 4.69s
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.68s
