@@ -55,6 +55,7 @@ Codync/
 │   ├── migrations/            # D1 migrations
 │   └── test/                  # workerd tests; e2e/ runs against a real test host
 ├── relay/                     # Separate APNs push Worker; src/ and test/
+├── discord/                   # Discord GitHub-role Worker (discord.codync.dev)
 ├── docs/                      # Architecture, guides, reference, features, design, archive
 ├── tools/                     # Release, App Store submission and font scripts
 ├── packaging/                 # Distribution templates
