@@ -109,3 +109,31 @@ async fn routing_cap_returns_an_error_instead_of_guessing() {
     assert!(error.to_string().contains("4096 lines without a user message"));
     room.shutdown().await;
 }
+
+#[tokio::test]
+async fn late_mentioned_member_gets_root_once_outside_the_prompt_window() {
+    let room = Room::new();
+    let lane = forty_lines(&room, "Please review", 30);
+    let group = room.hub.store.bot(&room.group).unwrap().unwrap().config;
+    let roster = members(&room.hub, &group);
+    let newcomer = roster.iter().find(|b| b.id == "b").unwrap();
+    assert_eq!(room.hub.store.last_spoke(&lane, "b"), 0);
+    let prompt = member_prompt(&room.hub, &group, &roster, newcomer, &lane).unwrap();
+    let root_count = prompt.matches("(thread started on) a: Original proposal").count();
+    println!("INPUT: 40-line thread; b first mentioned on line 30; b has never spoken");
+    println!(
+        "OUTPUT: root_occurrences={root_count}; line30={}; line40={}",
+        prompt.contains("line 30: @b review this"),
+        prompt.contains("line 40: progress")
+    );
+    assert_eq!(root_count, 1);
+    assert!(prompt.contains("line 30: @b review this"));
+    assert!(prompt.contains("line 40: progress"));
+    room.hub
+        .store
+        .insert_entry(&lane, EntryKind::Agent, 2, &json!({"text": "Review complete", "author": "b", "final": true}))
+        .unwrap();
+    let subsequent = member_prompt(&room.hub, &group, &roster, newcomer, &lane).unwrap();
+    assert!(!subsequent.contains("(thread started on)"), "root is not repeated after b speaks");
+    room.shutdown().await;
+}
