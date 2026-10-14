@@ -36,6 +36,7 @@ Source review, a passing build, local integration tests and production acceptanc
 - [Routines](features/routines.md)
 - [Widgets, Live Activities and onboarding](design/mobile-widgets.md)
 - [Notifications and background Live Activity updates](design/push-and-live-activity.md)
+- [Message blocks (draft)](design/message-blocks.md)
 
 ## Documentation layout
 
