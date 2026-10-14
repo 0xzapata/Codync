@@ -1,6 +1,7 @@
 import type { CallError } from '@shared/ipc'
 import { isChat, normalizeBot, type Bot, type BotDraft, type Entry, type GroupDraft } from '@shared/models'
 import * as story from './story'
+import { groupResponders } from './group-responders'
 
 // An in-memory codync-host for the website demo: the methods the renderer calls, with the
 // host's JSON shapes (host/src/api/), and the events stream (hello, then catch-up in rev
@@ -166,11 +167,9 @@ export class FakeHost {
   private async converse(chat: Bot, thread: string | null, text: string) {
     let responders = [chat.id]
     if (chat.kind === 'group') {
-      const members = chat.members.filter((m) => this.bots.has(m))
-      const mentioned = members.filter((m) => text.toLowerCase().includes(`@${this.bots.get(m)!.name.toLowerCase()}`))
-      const rootAuthor = thread ? this.entries.find((e) => e.id === thread)?.data.author : undefined
-      // A room turn: who was asked, the thread's bot, or the first two members.
-      responders = mentioned.length ? mentioned : rootAuthor && members.includes(rootAuthor) ? [rootAuthor] : members.slice(0, 2)
+      const members = chat.members.flatMap((id) => this.bots.get(id) ?? [])
+      const root = thread ? this.entries.find((e) => e.id === thread) : undefined
+      responders = groupResponders(members, text, root?.kind === 'agent' ? root.data.author : undefined)
     }
     for (const r of responders) await this.answer(r, chat.id, thread, this.replyText(r))
   }
