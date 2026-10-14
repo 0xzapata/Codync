@@ -92,6 +92,8 @@ The TUI connects to one host at a time, so it keeps its single roster.
   iPhone gate as before). Installs of the SwiftUI app get the first desktop release through one
   more Sparkle appcast, generated for the zip by the release workflow (deprecated, removed after
   2026-11-06: [updates guide](../guides/updates.md#deprecated-the-sparkle-migration-appcast-remove-after-2026-11-06)).
+  On macOS the app removes an idle installer job (`<appId>.ShipIt`) whose update request is gone:
+  launchd would otherwise restart it every 2 seconds, forever.
 
 ## Development
 
