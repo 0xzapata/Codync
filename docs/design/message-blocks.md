@@ -71,8 +71,8 @@ Status: **draft, pending the spike (#8).**
 - The **host renders** the diagram. Apps never parse Mermaid.
 - **PNG is required.** iOS has no public API to draw an SVG string at runtime, and Mermaid draws
   its default labels as HTML (`foreignObject`) that a sanitiser strips, so an SVG may arrive
-  without text. Host config `htmlLabels: false` should keep labels as SVG `<text>`; the spike
-  confirms it.
+  without text. Host config `htmlLabels: false` is expected to keep labels as SVG `<text>`. This
+  is a hypothesis until the spike (#8) records its findings.
 - PNG limits: at most **512 KB raw**, **2000 px** per side and **4 megapixels** decoded. `w` and
   `h` are the PNG's pixel size, and `scale` says how many pixels make one point (a 1200 x 800 px
   PNG at `scale: 2` draws 600 x 400 pt). The host checks `w`, `h` and the real PNG header agree,
