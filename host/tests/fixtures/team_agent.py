@@ -119,6 +119,8 @@ def prompt(request):
         room = text.split("New messages in the room (oldest first):\n", 1)[-1].split("\n\n", 1)[0]
         last = room.strip().splitlines()[-1] if "New messages" in text else ""
         reply = "reply: group" if last.startswith("User:") else "(pass)"
+        if last.startswith("User:") and pathlib.Path("group-reply.txt").exists():
+            reply = pathlib.Path("group-reply.txt").read_text()
         # Two chunks, apart: the streamed entry is rewritten before it's final.
         update({"sessionUpdate": "agent_message_chunk", "content": {"type": "text", "text": reply[:3]}})
         time.sleep(0.4)
