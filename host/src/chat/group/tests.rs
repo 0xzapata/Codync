@@ -59,7 +59,7 @@ fn thread_owner_is_only_the_fallback_not_a_required_responder() {
 async fn bot_mention_invites_another_member_in_round_two() {
     let room = Room::new();
     std::fs::write(room.dir.join("a/group-reply.txt"), "@b please review this").unwrap();
-    let root = room
+    let thread_root = room
         .hub
         .store
         .insert_entry(
@@ -69,7 +69,7 @@ async fn bot_mention_invites_another_member_in_round_two() {
             &json!({"text": "Proposal from a", "author": "a", "final": true}),
         )
         .unwrap();
-    room.send("Please continue", Some(&root.id)).await;
+    room.send("Please continue", Some(&thread_root.id)).await;
     room.settle().await;
     let prompts = std::fs::read_to_string(room.dir.join("b/prompts.jsonl")).unwrap();
     assert_eq!(prompts.lines().count(), 1, "b joins only the next round");
@@ -174,7 +174,7 @@ impl Room {
 #[tokio::test]
 async fn unmentioned_thread_reply_reaches_only_its_author() {
     let room = Room::new();
-    let root = room
+    let thread_root = room
         .hub
         .store
         .insert_entry(
@@ -184,9 +184,9 @@ async fn unmentioned_thread_reply_reaches_only_its_author() {
             &json!({"text": "Proposal from b", "author": "b", "final": true}),
         )
         .unwrap();
-    room.send("Please continue", Some(&root.id)).await;
+    room.send("Please continue", Some(&thread_root.id)).await;
     room.settle().await;
-    let replies = room.replies(&Lane::in_thread(&room.group, &root.id));
+    let replies = room.replies(&Lane::in_thread(&room.group, &thread_root.id));
     println!("INPUT: members=[a,b], root.author=b, user=Please continue");
     println!("OUTPUT: {replies:?}");
     let a_was_called = room.dir.join("a/prompts.jsonl").exists();

@@ -1,7 +1,7 @@
 use super::*;
 
 fn forty_lines(room: &Room, user_text: &str, mention_line: usize) -> Lane {
-    let root = room
+    let thread_root = room
         .hub
         .store
         .insert_entry(
@@ -11,7 +11,7 @@ fn forty_lines(room: &Room, user_text: &str, mention_line: usize) -> Lane {
             &json!({"text": "Original proposal", "author": "a", "final": true}),
         )
         .unwrap();
-    let lane = Lane::in_thread(&room.group, &root.id);
+    let lane = Lane::in_thread(&room.group, &thread_root.id);
     for line in 1..=40 {
         let kind = if line == 1 { EntryKind::User } else { EntryKind::Agent };
         let text = if line == 1 {
