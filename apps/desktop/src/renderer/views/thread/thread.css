@@ -349,10 +349,30 @@
   overflow: hidden;
 }
 .side-panel.shown { opacity: 1; }
+.side-panel.resizing { transition: none; }
 .side-panel-border {
   width: 1px;
   background: var(--border);
   flex: none;
+}
+/* Same generous hit area as the sidebar edge, inside the panel's clipped bounds. */
+.side-panel-divider {
+  position: relative;
+  z-index: 6;
+  touch-action: none;
+  -webkit-app-region: no-drag;
+}
+.side-panel-divider::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 9px;
+  cursor: col-resize;
+  -webkit-app-region: no-drag;
+}
+.side-panel-divider:focus-visible::after {
+  background: var(--accent);
+  width: 3px;
 }
 @keyframes panel-slide {
   from {

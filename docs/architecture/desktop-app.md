@@ -22,6 +22,13 @@ determines when there are no earlier messages.
 
 ## Layout
 
+Drag the left edge of a reply thread panel to resize it. Its width is saved on the device,
+while the main conversation keeps at least 320 px. Focus the divider and use Left/Right to
+resize in 20 px steps, or Home/End for the limits. Neither the sidebar nor the reply panel
+animates width during a pointer drag. Narrow windows still show replies in a sheet; iOS
+uses its existing sheet and the terminal switches its chat pane into the thread, so neither
+has this desktop-only divider.
+
 | Path | |
 |---|---|
 | `src/main/` | Main process: host service (`host-controller.ts`), loopback HTTP/SSE proxy (`host-proxy.ts`), menu bar/tray, windows, account sign-in (Clerk Frontend API, `account.ts`), cloud API and device key (`cloud.ts`), updates (`updates.ts`), SSH tunnels (`ssh.ts`), Codync Screen agent (`screen.ts`), on-device speech (`speech.ts`), browser sign-in callbacks (`auth.ts`), the [notch island](../features/notch-island.md) window (`island.ts`) |
