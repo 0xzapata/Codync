@@ -22,8 +22,9 @@ determines when there are no earlier messages.
 
 ## Layout
 
-Drag the left edge of a reply thread panel to resize it. Its width is saved on the device,
-while the main conversation keeps at least 320 px. Focus the divider and use Left/Right to
+Drag the left edge of a reply thread panel to resize it. Its width is saved on release;
+cancelled drags leave the saved width unchanged. The main conversation keeps at least
+320 px. Focus the divider and use Left/Right to
 resize in 20 px steps, or Home/End for the limits. Neither the sidebar nor the reply panel
 animates width during a pointer drag. Narrow windows still show replies in a sheet; iOS
 uses its existing sheet and the terminal switches its chat pane into the thread, so neither
