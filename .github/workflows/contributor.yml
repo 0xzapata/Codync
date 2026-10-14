@@ -1,7 +1,7 @@
 name: contributor
 
-# A contributor's first merged pull request or first issue gets a thank-you with the link that hands out the
-# Discord Contributor / Reporter role. pull_request_target runs this file from the default branch and never
+# A contributor's first merged pull request or first issue gets a thank-you with the link that adds them to the
+# Discord with the Contributor / Reporter role. pull_request_target runs this file from the default branch and never
 # checks out the PR's code.
 on:
   pull_request_target:
@@ -36,4 +36,4 @@ jobs:
             role=Contributor; what="your first merged contribution"
           fi
           [ "$count" -le 1 ] || exit 0
-          gh api "repos/$REPO/issues/$NUMBER/comments" -f body="Thanks for $what, @$AUTHOR! Join the [Codync Discord](https://discord.gg/KBAX3Qznxh) and claim the **$role** role at https://discord.codync.dev (it checks the GitHub account connected to your Discord profile)."
+          gh api "repos/$REPO/issues/$NUMBER/comments" -f body="Thanks for $what, @$AUTHOR! Join the Codync Discord with the **$role** role in one step: https://discord.codync.dev"
