@@ -1,6 +1,6 @@
-# Marketplace and agent setup
+# Extensions and agent setup
 
-The Plugins screen configures capabilities installed on the selected computer. Account membership does not install the same capability on every computer.
+The Extensions screen configures capabilities installed on the selected computer. Account membership does not install the same capability on every computer.
 
 | Capability | Implementation | Behavior |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ A connector installed on the computer (or an app connected through Composio) is 
 
 Skills follow the same rule: an installed or hand-written skill is turned on for every existing bot, a new bot starts with all of them on, and each bot can turn one off. An enabled skill reaches the agent as a line in its profile (name, description, path to `SKILL.md`). Skills installed before this rule were turned on for every bot once, at host start (kv `skillsOnForEveryBot`).
 
-Clicking a skill (a Marketplace row, an installed skill, or the info button beside a skill's switch in bot settings; in the terminal, ↵ on a skill, or `i` on the bot form's Skills field) opens its details: the description and its instructions, with Add while it isn't installed. `skillDetails {id}` (installed) or `{source}` (catalog) returns `{markdown}`: the `SKILL.md` body without its front matter, at most 256 KB. The host looks names up in the installed list or the catalog cache, never as a path; the catalog fetch already downloads every `SKILL.md`, so the bodies stay in that cache. A Marketplace row opens its details, or does what its button does when it has none (connectors open their install sheet).
+Clicking a skill (an Extensions row, an installed skill, or the info button beside a skill's switch in bot settings; in the terminal, ↵ on a skill, or `i` on the bot form's Skills field) opens its details: the description and its instructions, with Add while it isn't installed. `skillDetails {id}` (installed) or `{source}` (catalog) returns `{markdown}`: the `SKILL.md` body without its front matter, at most 256 KB. The host looks names up in the installed list or the catalog cache, never as a path; the catalog fetch already downloads every `SKILL.md`, so the bodies stay in that cache. An Extensions row opens its details, or does what its button does when it has none (connectors open their install sheet).
 
 Typing `/` at the start of a message to a bot (desktop, iPhone, terminal; not in a group, where each member has its own skills) lists that bot's skills; picking one fills in `/<skill id> `. The host sees a message starting with `/<id of a skill the bot has on>` and hands the agent `[Codync: the user picked the "<name>" skill for this message. Read <path> first and follow it.]` followed by the rest of the message; the chat keeps the text as typed. Any other `/command` reaches the agent unchanged, so its own commands keep working. Clients show the menu and load skill instructions only from hosts 2.14.1 and newer.
 
