@@ -9,6 +9,7 @@
     "dev": "wrangler dev --env local",
     "deploy:dev": "wrangler deploy --env dev",
     "deploy:main": "wrangler deploy",
+    "deploy:own": "! grep -q REPLACE-ME wrangler.toml && wrangler deploy --env own",
     "typecheck": "tsc && tsc -p test/e2e",
     "test": "vitest run",
     "e2e": "node --experimental-strip-types --no-warnings test/e2e/relay.e2e.ts"
