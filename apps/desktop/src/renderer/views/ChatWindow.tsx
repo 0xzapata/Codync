@@ -153,6 +153,7 @@ function ChatSplitView() {
   const connecting = ssh.state.profiles.some((p) => isSSHConnecting(ssh.status(p.id))) || [...app.stores.values()].some((s) => s.shownConnection.kind === 'connecting')
   const [compact, setCompact] = usePref(prefs.sidebarCompact)
   const [sidebarWidth, setSidebarWidth] = usePref(prefs.sidebarWidth)
+  const [sidebarResizing, setSidebarResizing] = useState(false)
   const [hidden, setHidden] = usePref(prefs.hiddenComputers)
   const [searching, setSearching] = useState(false)
   const [composing, setComposing] = useState(false)
@@ -278,9 +279,12 @@ function ChatSplitView() {
   // The sidebar's edge drags its width; narrower than 180 collapses it to the rail.
   const dragStart = useRef<{ x: number; width: number } | null>(null)
   const onDividerDown = (e: React.PointerEvent) => {
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    if (e.button !== 0) return
+    e.currentTarget.setPointerCapture(e.pointerId)
     dragStart.current = { x: e.clientX, width: compact ? 76 : sidebarWidth }
+    setSidebarResizing(true)
   }
+  const endDividerDrag = () => { dragStart.current = null; setSidebarResizing(false) }
   const onDividerMove = (e: React.PointerEvent) => {
     if (!dragStart.current) return
     const proposed = dragStart.current.width + e.clientX - dragStart.current.x
@@ -340,7 +344,7 @@ function ChatSplitView() {
   const width = compact ? 76 : sidebarWidth
   return (
     <div className="split" style={{ pointerEvents: showAccount || contextBot ? 'none' : undefined }}>
-      <aside className={`sidebar ${compact ? 'compact' : ''}`} style={{ width }}>
+      <aside className={`sidebar ${compact ? 'compact' : ''} ${sidebarResizing ? 'resizing' : ''}`} style={{ width }}>
         <div className="sidebar-header drag" style={{ paddingLeft: compact ? 0 : isMac ? 80 : 18, opacity: compact ? 0 : 1, pointerEvents: compact ? 'none' : undefined }} aria-hidden={compact}>
           <span style={{ flex: 1 }} />
           <div className="no-drag" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -380,7 +384,7 @@ function ChatSplitView() {
           <SidebarFooter accountOpen={showAccount} onAccount={() => setShowAccount((s) => !s)} onConnectApps={openMarketplace} />
         )}
       </aside>
-      <div className="sidebar-divider" onPointerDown={onDividerDown} onPointerMove={onDividerMove} onPointerUp={() => (dragStart.current = null)} role="separator" aria-label="Resize sidebar" aria-valuenow={width} />
+      <div className="sidebar-divider" onPointerDown={onDividerDown} onPointerMove={onDividerMove} onPointerUp={endDividerDrag} onPointerCancel={endDividerDrag} onLostPointerCapture={endDividerDrag} role="separator" aria-label="Resize sidebar" aria-valuenow={width} />
       <main className="detail">
         {/* The call bar's settings open this window's Settings at Voice chat. */}
         <OpenVoiceSettings.Provider value={openVoiceSettings}>{detail}</OpenVoiceSettings.Provider>
