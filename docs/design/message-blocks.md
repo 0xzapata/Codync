@@ -51,11 +51,16 @@ Rules for every block:
 ## Size
 
 The host's WebSocket frame limit is exactly 1 MiB (`MAX_WS_MESSAGE`,
-`host/src/remote/channel.rs:30`; iOS enforces the same figure). An entry travels as one JSON
-frame, and base64 makes binary data a third larger.
+`host/src/remote/channel.rs:30`; iOS enforces the same figure at
+`apps/ios/Kit/Sources/CodyncKit/Client/HostConnector.swift:77`). An entry travels as one JSON
+frame, and base64 makes binary data a third larger. The remote channel also wraps the entry in
+its own envelope, whose overhead is not yet measured.
 
-- An entry's whole `data` is at most **768 KB**.
+- An entry's whole `data` is at most **768 KB of serialised JSON** (bytes of the string, not the
+  decoded images).
 - The host **rejects**, never truncates, an entry over the cap.
+- The cap is provisional until a host test sends a worst-case entry through the real channel and
+  shows it fits one frame with the envelope.
 - Larger images may later use the chunked file path (`bots.rs`, 256 KiB chunks). Out of scope
   for v1.
 
@@ -68,7 +73,10 @@ Status: **draft, pending the spike (#8).**
   its default labels as HTML (`foreignObject`) that a sanitiser strips, so an SVG may arrive
   without text. Host config `htmlLabels: false` should keep labels as SVG `<text>`; the spike
   confirms it.
-- PNG limits: at most **512 KB raw** and **2000 px** per side.
+- PNG limits: at most **512 KB raw**, **2000 px** per side and **4 megapixels** decoded. `w` and
+  `h` are the PNG's pixel size, and `scale` says how many pixels make one point (a 1200 x 800 px
+  PNG at `scale: 2` draws 600 x 400 pt). The host checks `w`, `h` and the real PNG header agree,
+  so a small file cannot decode to a huge bitmap on a phone.
 - **SVG is optional and desktop only.** The host sanitises it with an allowlist of elements
   (strip `script`, `foreignObject`, `on*` attributes, external `href`/`xlink:href`, `@import`).
   Clients show it as an image, never inline in the DOM. At most **256 KB**.
