@@ -1,8 +1,9 @@
 # Windows testing
 
 Codync ships an x64 Windows app (Electron + the bundled `codync-host.exe`). Real Windows behavior is
-checked in a UTM virtual machine on the Mac. Everyday end-to-end checks stay on the Mac; use the VM
-when a change or a bug depends on Windows itself (paths, `cmd.exe`, `.cmd` shims, the service).
+checked in a UTM virtual machine on the Mac. Everyday end-to-end checks stay on the Mac (minimal
+e2e); use the VM for a full e2e, or when a change or a bug depends on Windows itself (paths,
+`cmd.exe`, `.cmd` shims, the service).
 
 ## The VM
 
