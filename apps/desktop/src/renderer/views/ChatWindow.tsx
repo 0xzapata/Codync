@@ -14,6 +14,7 @@ import type { BotStore } from '../store/bot-store'
 import { useComputerRoster } from '../store/computer-roster'
 import { BotRoster } from './BotRoster'
 import { SidebarFooter } from './SidebarFooter'
+import { UpdateBadge } from './UpdateButton'
 import { ComputerFilterHeader, computerSelection } from './ComputerFilterHeader'
 import { ThreadView } from './thread/ThreadView'
 import { NewChatView } from './bots/NewChatView'
@@ -153,6 +154,7 @@ function ChatSplitView() {
   const connecting = ssh.state.profiles.some((p) => isSSHConnecting(ssh.status(p.id))) || [...app.stores.values()].some((s) => s.shownConnection.kind === 'connecting')
   const [compact, setCompact] = usePref(prefs.sidebarCompact)
   const [sidebarWidth, setSidebarWidth] = usePref(prefs.sidebarWidth)
+  const [sidebarResizing, setSidebarResizing] = useState(false)
   const [hidden, setHidden] = usePref(prefs.hiddenComputers)
   const [searching, setSearching] = useState(false)
   const [composing, setComposing] = useState(false)
@@ -278,9 +280,12 @@ function ChatSplitView() {
   // The sidebar's edge drags its width; narrower than 180 collapses it to the rail.
   const dragStart = useRef<{ x: number; width: number } | null>(null)
   const onDividerDown = (e: React.PointerEvent) => {
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    if (e.button !== 0) return
+    e.currentTarget.setPointerCapture(e.pointerId)
     dragStart.current = { x: e.clientX, width: compact ? 76 : sidebarWidth }
+    setSidebarResizing(true)
   }
+  const endDividerDrag = () => { dragStart.current = null; setSidebarResizing(false) }
   const onDividerMove = (e: React.PointerEvent) => {
     if (!dragStart.current) return
     const proposed = dragStart.current.width + e.clientX - dragStart.current.x
@@ -341,7 +346,7 @@ function ChatSplitView() {
   const width = compact ? 76 : sidebarWidth
   return (
     <div className="split" style={{ pointerEvents: showAccount || contextBot ? 'none' : undefined }}>
-      <aside className={`sidebar ${compact ? 'compact' : ''}`} style={{ width }}>
+      <aside className={`sidebar ${compact ? 'compact' : ''} ${sidebarResizing ? 'resizing' : ''}`} style={{ width }}>
         <div className="sidebar-header drag" style={{ paddingLeft: compact ? 0 : isMac ? 80 : 18, opacity: compact ? 0 : 1, pointerEvents: compact ? 'none' : undefined }} aria-hidden={compact}>
           <span style={{ flex: 1 }} />
           <div className="no-drag" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -373,6 +378,7 @@ function ChatSplitView() {
             <IconButton title="New" icon="plus" size={36} buttonRef={railNewButton} disabled={!onlineStores.length} onClick={() => setRailNewMenu((o) => !o)} />
             <AnchoredMenu open={railNewMenu} onClose={() => setRailNewMenu(false)} anchor={railNewButton} items={newItems} />
             <IconButton title="Extensions" icon="square.grid.2x2" size={36} onClick={openMarketplace} />
+            <UpdateBadge size={32} />
             <button className="rail-profile" style={{ background: showAccount ? 'var(--bubble-agent)' : undefined }} aria-label="Open account menu for Account" title="Account" onClick={() => setShowAccount((s) => !s)}>
               <ProfileAvatar />
             </button>
@@ -381,7 +387,7 @@ function ChatSplitView() {
           <SidebarFooter accountOpen={showAccount} onAccount={() => setShowAccount((s) => !s)} onExtensions={openMarketplace} />
         )}
       </aside>
-      <div className="sidebar-divider" onPointerDown={onDividerDown} onPointerMove={onDividerMove} onPointerUp={() => (dragStart.current = null)} role="separator" aria-label="Resize sidebar" aria-valuenow={width} />
+      <div className="sidebar-divider" onPointerDown={onDividerDown} onPointerMove={onDividerMove} onPointerUp={endDividerDrag} onPointerCancel={endDividerDrag} onLostPointerCapture={endDividerDrag} role="separator" aria-label="Resize sidebar" aria-valuenow={width} />
       <main className="detail">
         {/* The call bar's settings open this window's Settings at Voice chat. */}
         <OpenVoiceSettings.Provider value={openVoiceSettings}>{detail}</OpenVoiceSettings.Provider>

@@ -5,6 +5,7 @@ import { Spinner } from '../../components/Controls'
 import { Icon } from '../../components/Icon'
 import { Sheet } from '../../components/Overlay'
 import { font } from '../../lib/fonts'
+import { prefs, usePref } from '../../lib/prefs'
 import { useStore } from '../../store/context'
 import { UpdateNeededCard } from '../UpdateNeededCard'
 import { buildChat, rowIn, useArrivals, type ChatItem } from './chat-items'
@@ -16,6 +17,7 @@ import { DetailsPanel } from './DetailsPanel'
 import { RepliesView } from './RepliesView'
 import { TraceView } from './TraceView'
 import { useReading } from './reading'
+import { threadPanelSize } from './panel-size'
 import { GroupEditorView } from '../bots/GroupEditorView'
 import { BotTemplateView } from '../bots/BotTemplateView'
 import { CallView } from '../call/CallView'
@@ -50,6 +52,8 @@ export function ThreadView({ botId }: { botId: string }) {
   const root = useRef<HTMLDivElement>(null)
   const dock = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(800)
+  const [preferredThreadWidth, setThreadWidth] = usePref(prefs.threadPanelWidth)
+  const threadSize = threadPanelSize(preferredThreadWidth, width)
   useReading(store, botId, null)
 
   useLayoutEffect(() => {
@@ -163,7 +167,11 @@ export function ThreadView({ botId }: { botId: string }) {
           </div>
         ) : null}
       </div>
-      <ChatSidePanel open={wide && (!!openThread || showSettings)} width={openThread ? Math.min(420, width * 0.45) : 292}>
+      <ChatSidePanel
+        open={wide && (!!openThread || showSettings)}
+        width={openThread ? threadSize.width : 292}
+        resize={openThread ? { min: threadSize.min, max: threadSize.max, onChange: setThreadWidth } : undefined}
+      >
         {openThread ? <RepliesView key={openThread} botId={botId} rootId={openThread} close={closeThread} /> : details}
       </ChatSidePanel>
 

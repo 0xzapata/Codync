@@ -35,7 +35,8 @@
 /* A layer fading away stays mounted until its exit timer fires (late in a background window):
    it must never take the clicks meant for what's under it. */
 .modal-card:not(.shown),
-.dialog:not(.shown) {
+.dialog:not(.shown),
+.anchored:not(.shown) {
   pointer-events: none;
 }
 

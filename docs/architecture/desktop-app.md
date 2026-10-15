@@ -22,6 +22,14 @@ determines when there are no earlier messages.
 
 ## Layout
 
+Drag the left edge of a reply thread panel to resize it. Its width is saved on release;
+cancelled drags leave the saved width unchanged. The main conversation keeps at least
+320 px. Focus the divider and use Left/Right to
+resize in 20 px steps, or Home/End for the limits. Neither the sidebar nor the reply panel
+animates width during a pointer drag. Narrow windows still show replies in a sheet; iOS
+uses its existing sheet and the terminal switches its chat pane into the thread, so neither
+has this desktop-only divider.
+
 | Path | |
 |---|---|
 | `src/main/` | Main process: host service (`host-controller.ts`), loopback HTTP/SSE proxy (`host-proxy.ts`), menu bar/tray, windows, account sign-in (Clerk Frontend API, `account.ts`), cloud API and device key (`cloud.ts`), updates (`updates.ts`), SSH tunnels (`ssh.ts`), Codync Screen agent (`screen.ts`), on-device speech (`speech.ts`), browser sign-in callbacks (`auth.ts`), the [notch island](../features/notch-island.md) window (`island.ts`), [error tracking](../features/analytics.md#error-tracking) (`error-reports.ts`) |
@@ -138,7 +146,10 @@ npm run dist:win:dev      # / dist:win:main, on Windows (builds the bundled host
 They write `resources/account-config.json` for that environment, and the Mac ones build the
 bundled host (`tools/native-host.mjs`, universal, through rustup's pinned toolchain) for the same
 one, so app and host always match, plus the Codync Screen helper (`tools/native-screen.mjs`).
-Extra electron-builder flags go after `--` (`npm run dist:mac:dev -- --dir --arm64`). The speech
+`dist:mac:dev` builds only what this Mac runs: the app folder for its architecture
+(`dist/mac-arm64/Codync Dev.app` on Apple silicon), the host for that architecture in the faster
+`dev-app` profile, and signatures without Apple's timestamp server (only notarized builds need it;
+asking it for every file adds about 5 minutes). Extra electron-builder flags go after `--`. The speech
 helper at the top of `electron-builder.yml` doesn't depend on the environment; place it first
 (the release workflow, `.github/workflows/release-desktop.yml`, shows how).
 `dist:mac:dev` signs with the team 7FUM8A8H72 development certificate (`CSC_NAME` in

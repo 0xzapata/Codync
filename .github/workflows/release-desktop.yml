@@ -61,6 +61,8 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: host
+          # Saved on main by rust-cache.yml.
+          shared-key: desktop-macos
 
       - name: Install Apple certificate
         env:

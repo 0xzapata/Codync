@@ -1,0 +1,316 @@
+npm warn Unknown user config "min-release-age". This will stop working in the next major version of npm.
+npm warn Unknown user config "minimum-release-age-exclude". This will stop working in the next major version of npm.
+npm warn Unknown user config "minimumReleaseAgeExclude". This will stop working in the next major version of npm.
+
+> codync-desktop@2.17.1 test
+> node --test --experimental-strip-types src/shared/*.test.ts src/renderer/lib/*.test.ts src/renderer/views/thread/*.test.ts
+
+(node:30711) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30711) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/computer-access.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ permission setup uses the local host identity even when a remote computer is selected (99.322542ms)
+✔ repeated checks never request permissions; explicit actions and failures stay reviewable (29.869417ms)
+(node:30712) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30712) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/computer-order.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ computer ordering stays on each device, survives restart, and isolates accounts (143.90375ms)
+(node:30713) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30713) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/computer-roster.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ saved computer order survives reconnect order and appends new computers (15.491334ms)
+✔ moving a section works in either direction without losing hidden computers (0.1945ms)
+✔ each computer keeps its own bots in activity order, including duplicate bot ids (0.1995ms)
+(node:30714) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30714) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/group-responders.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ demo fallback matches the host for main, owned and orphaned threads (2.765375ms)
+✔ mentions override the thread owner with the same host handle boundaries (0.365542ms)
+✔ all and everyone override both explicit mentions and the thread owner (0.097166ms)
+✔ names with regex punctuation are matched literally (0.431833ms)
+(node:30715) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30715) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/message-preview.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ roster previews read formatted replies without markdown markers (0.481208ms)
+(node:30716) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30716) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/overlay-layers.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ every full-window overlay layer stops taking clicks while it fades out (2.733ms)
+(node:30717) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30717) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/lib/star-ask.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ asks right away, then once more after a week, then never (0.707917ms)
+✔ starring at the first ask skips the second (0.068708ms)
+(node:30718) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30718) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/views/thread/bot-exchange.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ bot replies stay in the popup while independent reports stay in the main chat (1.157542ms)
+✔ decodes the wire JSON and reads direction and verb from either chat (0.124708ms)
+✔ structured request is independent of the displayed verb and chat direction (0.15625ms)
+✔ a name with spaces and a request containing ": " and newlines (0.079167ms)
+✔ completed ask extracts a multi-line reply; message completion has none (0.142042ms)
+✔ failed and cancelled carry the outcome as detail (0.116959ms)
+✔ queued and sent are pending (0.056708ms)
+✔ structured request does not depend on the rendered notice heading (0.058167ms)
+✔ existing notices without structured data remain ordinary notices (0.28525ms)
+✔ outcome follows the status (0.34025ms)
+✔ the merge keeps the higher rev, filters the peer and sorts by seq (0.164667ms)
+✔ rows: separators, author grouping, reply and status captions (0.12975ms)
+✔ consecutive requests from one author drop the repeated label (0.141916ms)
+✔ same-peer runs group at their first entry, in either direction (0.067084ms)
+✔ a different peer or a visible entry splits the run (0.073625ms)
+✔ trace entries and plain notices: trace is skipped, a plain notice splits (0.061167ms)
+✔ the summary counts and flags a failure anywhere in the group (0.069333ms)
+(node:30719) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30719) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/views/thread/composer-keyboard.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ Enter sends; Shift/Option-Enter preserve multiline input (0.483916ms)
+✔ CJK candidate confirmation and a held Enter never send (0.073292ms)
+(node:30720) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30720) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/views/thread/markdown-blocks.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ blocks: headings, nested lists, rules, tables and code (18.176667ms)
+✔ a pipe line without its rule stays text (0.18ms)
+(node:30721) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30721) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/views/thread/panel-size.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ a new reply panel keeps the existing responsive default (0.434125ms)
+✔ a saved width fits both conversations and returns when the window grows (0.375625ms)
+✔ invalid stored widths use the default instead of breaking the layout (0.118375ms)
+(node:30722) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30722) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/views/thread/side-panel-drag.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ thread resizing previews locally, saves once on release, and discards cancelled drags (60.898084ms)
+(node:30723) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30723) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/renderer/views/thread/skill-command.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ a leading slash opens the skill menu until the name ends (0.437209ms)
+✔ only the bot's own skills match, by id or name (0.397917ms)
+(node:30724) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30724) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/compat.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ versions parse like the host and the iPhone app (1.527875ms)
+✔ the side that must update (0.146875ms)
+(node:30725) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30725) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/composer-drafts.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ drafts survive reopening with whitespace and isolate bots, threads and accounts (2.519042ms)
+✔ deleting a bot removes its main and thread drafts, but preserves other bots (0.120041ms)
+✔ malformed or unavailable persistence does not destroy editable in-memory text (0.216916ms)
+✔ late edits from a retired store cannot overwrite a reopened conversation (0.098208ms)
+(node:30726) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30726) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/computer-access.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ startup never registers a fresh helper, but an app update restores an existing choice (1.214666ms)
+✔ macOS setup advances only with observed permissions, and recovers after revocation (0.399041ms)
+✔ Linux requests a portal session and Windows never asks for macOS grants (0.342ms)
+(node:30727) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30727) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/environment.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ development installations cannot share production resources or update feed (0.466708ms)
+✔ a development app rejects production and old unidentified hosts (0.110958ms)
+(node:30728) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30728) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/error-report.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ a report keeps the error class and its frames, never the message (4.630208ms)
+✔ a thrown non-error has a type but nothing else (0.652083ms)
+(node:30729) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30729) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/files.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ verified downloads preserve binary and empty files and replace only on success (78.837375ms)
+✔ cancelled and corrupt downloads preserve existing destinations and remove partial files (59.53725ms)
+✔ rejects changed, truncated and oversized chunks and provides portable save suggestions (0.725459ms)
+✔ retiring a computer while Save is pending cancels its handle without fetching bytes (11.541458ms)
+✔ cancelling an outstanding chunk cannot write or commit a late response (0.741042ms)
+(node:30730) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30730) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/host-update.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ darwin: updating stops the bundled host after unregistering screen and persists restart (83.80775ms)
+✔ win32: updating stops the bundled host after unregistering screen and persists restart (20.482459ms)
+✔ app replacement leaves externally managed hosts running: {"platform":"linux"} (14.292541ms)
+✔ app replacement leaves externally managed hosts running: {"devPort":"19333"} (16.391458ms)
+✔ an install already in progress prevents update preparation from stopping the host (14.218833ms)
+✔ missing bundled binary rejects preparation without pretending stop succeeded (13.753833ms)
+✔ failed stop reports the error and cancellation reinstalls the service once (17.524083ms)
+✔ new app launch reinstalls the host and clears restart marker only after health matches (11.046166ms)
+✔ a stale host binary cannot satisfy the restart marker (14.789125ms)
+✔ failed service installation keeps the restart marker and exposes the error (10.337125ms)
+✔ an uninstalled host does not acquire a restart marker (14.043375ms)
+✔ idle detection distinguishes working, offline and idle hosts (18.749ms)
+✔ development install and stop reject a production binary before touching its service (13.896125ms)
+✔ development service installs on its own port (14.619958ms)
+(node:30731) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30731) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/island.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ closed, the island hides, peeks under the pointer and stays thin while bots work (12.3055ms)
+✔ open, it shows what needs you first, then the bots (8.98775ms)
+✔ an approval opens the island until it is put off, and opening shows it again (1.94525ms)
+✔ a bot that stops working is done, or failed when it ended in an error (2.552167ms)
+✔ the big slot goes to the bot that needs you, the rest to the side (0.15ms)
+✔ the notch is the screen width minus the menu bar on both sides (0.107459ms)
+✔ shapes follow the notch, and a plain top edge keeps a thin strip that wakes it (0.98575ms)
+(node:30732) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30732) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/mirror-window.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ earlier main-chat history stays available after a catch-up dominated by replies (0.651667ms)
+✔ empty chats and unsent optimistic messages do not offer server history (0.074417ms)
+✔ a rewritten old entry below the floor is dropped, even with turn 0 (0.117666ms)
+✔ an update to a held entry applies (0.053083ms)
+✔ a new entry at or above the floor applies (0.053541ms)
+✔ thread entries never fall outside (0.065292ms)
+✔ no floor accepts everything, including lower seqs after higher ones (rev-ordered catch-up) (0.069333ms)
+✔ since 0 snapshots nothing even when the mirror is loaded (0.04625ms)
+✔ floor ignores optimistic, threaded and unsequenced entries (0.338417ms)
+✔ a floor taken at hello is not moved by later inserts (RPC upsert before catch-up) (0.289667ms)
+✔ a send's RPC response newer than since doesn't set the floor (0.125208ms)
+(node:30733) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30733) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/models.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ a bot keeps its Fast mode through the settings draft (5.451167ms)
+✔ a host without Fast mode reads as off (0.0975ms)
+✔ the composer offers Fast mode once the agent does, and while it is on (15.709584ms)
+(node:30738) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30738) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/packaging-symbols.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ macOS packaging requires the Apple logo manifest entry and every rendered weight (17.078541ms)
+✔ Linux and Windows packaging does not require Apple-only SF Symbols (15.46475ms)
+(node:30998) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30998) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/packaging.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ Linux packages and Windows installation resources have separate development names (0.883792ms)
+✔ development packaging registers only development callbacks and background helpers (0.4995ms)
+(node:31083) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31083) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/quit-lifecycle.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ closing a window keeps the app running in the background (0.766375ms)
+✔ ordinary Quit lets the chat window close (0.0925ms)
+✔ a native update can close windows before app before-quit fires (0.101542ms)
+✔ checking and staging an update do not change ordinary close behavior (0.157083ms)
+✔ explicit shutdown allows a previously hidden window to close (0.545125ms)
+(node:31107) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31107) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/ssh-command.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ SSH finds a host installed in /custom/bin (324.061ms)
+✔ SSH finds a host installed in /opt/homebrew/bin (137.585958ms)
+✔ SSH finds a host installed in /usr/local/bin (132.262ms)
+✔ SSH finds a host installed in /home/linuxbrew/.linuxbrew/bin (137.118625ms)
+✔ SSH finds a host installed in /user home/.local/bin (127.4945ms)
+✔ SSH finds a host installed in /Applications/Codync.app/Contents/Resources (138.15025ms)
+✔ SSH preserves the host selected by the remote PATH (148.15175ms)
+✔ SSH reports command not found when no installation is reachable (9.607417ms)
+✔ development SSH uses only its own host with mac installed (146.745041ms)
+✔ development SSH uses only its own host with linux installed (289.507916ms)
+✔ development SSH uses only its own host with production-only installed (11.566792ms)
+✔ managed tunnels own their connection with ControlMaster no (8.810792ms)
+✔ managed tunnels own their connection with ControlMaster auto (6.437834ms)
+✔ managed tunnels own their connection with ControlMaster yes (6.777958ms)
+✔ managed tunnels own their connection with ControlMaster autoask (4.853791ms)
+✔ info honors explicit user and port overrides (5.704334ms)
+✔ tunnel honors explicit user and port overrides (4.901959ms)
+✔ resolve honors explicit user and port overrides (4.839125ms)
+✔ SSH prefers /opt/homebrew/bin over /Applications/Codync.app/Contents/Resources (156.302ms)
+(node:31139) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31139) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/ssh-startup.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ saved profiles keep connection status and management visible in every state (0.4475ms)
+✔ connecting or retrying SSH profiles open the workspace without a local host (0.080042ms)
+✔ an available computer or running local host keeps the workspace open (0.056042ms)
+✔ pending SSH rows distinguish idle, connected, retrying and terminal failures (0.079709ms)
+✔ summary separates active connection attempts from profiles needing attention (0.099125ms)
+(node:31172) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:31172) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<worktree>/apps/desktop/src/shared/updates.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <worktree>/apps/desktop/package.json.
+✔ development builds never check, download or install: {"packaged":false} (78.472834ms)
+✔ development builds never check, download or install: {"main":false} (17.031541ms)
+✔ an idle macOS installer job whose update request is gone is removed, at launch and hourly (56.934166ms)
+✔ manual check downloads with progress, then waits for Restart to update (11.600959ms)
+✔ the Update badge downloads the release if needed, then restarts into it (24.2495ms)
+✔ the app relaunched by a chosen restart opens its own bundle once to come forward (16.297708ms)
+✔ latest version records the last check without downloading or stopping the host (10.778834ms)
+✔ host stop failure preserves the staged release, reports an error and permits retry (10.09ms)
+✔ installer error restarts the stopped host and retry prepares it again (7.878292ms)
+✔ download errors are visible for manual checks without restarting a running host (9.262125ms)
+✔ normal Quit without a staged update leaves the host alone (7.079333ms)
+✔ Quit with a staged update waits for the host then retries Quit once (7.270625ms)
+✔ failed preparation cancels Quit and reports a retryable error (7.108083ms)
+✔ automatic checks respect opt-out and run daily after the startup check (6.899083ms)
+✔ background discovery downloads by default and not once automatic download is off (6.712333ms)
+✔ automatic install waits while disabled, then installs once idle (6.870667ms)
+✔ automatic install waits while focused, then installs once idle (6.823708ms)
+✔ automatic install waits while recentInput, then installs once idle (10.503375ms)
+✔ automatic install waits while busyHost, then installs once idle (6.581792ms)
+✔ paired iPhones hold an incompatible release until the App Store catches up (6.755917ms)
+✔ compatibility permits download with noPhones (6.4365ms)
+✔ compatibility permits download with compatibleHost (6.607041ms)
+✔ compatibility permits download with manualOffline (6.643417ms)
+✔ unattended updates wait when App Store or paired-device information is unknown (11.091ms)
+✔ repeated clicks during host shutdown must invoke the installer once (8.828ms)
+✔ an updater error during host shutdown cancels installation and restores the host (8.019583ms)
+✔ a synchronous installer failure restores the host and permits retry (8.3215ms)
+✔ an update error while preparing a normal Quit prevents that Quit (10.881333ms)
+✔ manual installation crosses the native quit boundary after stopping the host (6.746333ms)
+ℹ tests 156
+ℹ suites 0
+ℹ pass 156
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3289.166125
