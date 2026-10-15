@@ -1,3 +1,7 @@
-> codync-desktop@2.16.2 typecheck
+npm warn Unknown user config "min-release-age". This will stop working in the next major version of npm.
+npm warn Unknown user config "minimum-release-age-exclude". This will stop working in the next major version of npm.
+npm warn Unknown user config "minimumReleaseAgeExclude". This will stop working in the next major version of npm.
+
+> codync-desktop@2.17.1 typecheck
 > tsc --noEmit -p tsconfig.json
 
