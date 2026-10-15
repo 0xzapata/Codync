@@ -47,7 +47,10 @@ export function ChatSidePanel({ open, width, resize, children }: {
     drag.current = null
     setDragWidth(null)
     // Persist once; cancellation or lost capture leaves the saved preference untouched.
-    if (save && open && clamp(start.latest) !== width) changeWidth(start.latest)
+    // Measure from the release position: a fast drag can end before its last move is delivered,
+    // so `latest` may lag the point the pointer was actually let go at.
+    const released = clamp(start.width + start.x - e.clientX)
+    if (save && open && released !== width) changeWidth(released)
   }
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (!resize || !open || drag.current) return

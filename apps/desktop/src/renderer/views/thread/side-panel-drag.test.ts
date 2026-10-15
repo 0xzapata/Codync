@@ -100,4 +100,15 @@ test('thread resizing previews locally, saves once on release, and discards canc
   assert.equal(render().divider['aria-valuenow'], 450, 'a shrinking window clamps the live preview')
   fire('onPointerUp', 600)
   assert.equal(saves.at(-1), 450, 'release uses the current window bounds')
+
+  // A fast drag can be released before its final move is delivered, so the saved width must be
+  // measured from the release position rather than from the last previewed one.
+  const before = saves.length
+  props.width = 420
+  props.resize.max = 879
+  fire('onPointerDown', 700)
+  fire('onPointerMove', 600)
+  assert.equal(render().divider['aria-valuenow'], 520, 'the last preview still follows the last move')
+  fire('onPointerUp', 400)
+  assert.deepEqual(saves.slice(before), [720], 'release saves the width at the release position')
 })
