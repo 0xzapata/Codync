@@ -94,7 +94,8 @@ fetched once into `host/target/engram-test-runtime`), desktop, cloud and relay (
 `npm test`), Linux screen helper formatting, and a parse of the macOS screen helper's Swift
 sources (on macOS). It checks the staged files only, in a copy under `.git/precommit-snapshot`,
 so other agents' uncommitted edits in the same checkout neither break nor rescue a commit; the
-host builds into `host/target/precommit`. The npm checks reuse each package's `node_modules`
+host builds into `host/target/precommit`, and its tests are stopped after 5 minutes so a hung
+test fails the commit instead of holding it. The npm checks reuse each package's `node_modules`
 (run `npm ci` there first).
 
 Left to CI: the iOS Kit tests (an iPhone simulator) and the platform builds (Linux screen
