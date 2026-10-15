@@ -73,6 +73,9 @@ thread to open, so the seeded demo was used; it runs the same components and CSS
 ## Files
 
 - `overlay-click-ab.json`: the A/B measurement described above.
-- `tests.txt`: `npm test` (156 passed, 0 failed) at the current head.
+- `tests.txt`: `npm test` (156 passed, 0 failed) at the current head. The runner prints absolute
+  paths, so the machine's home directory, the workspace id and the worktree path are replaced
+  with `<home>`, `<codync-home>` and `<worktree>`; nothing else is edited. `/home/linuxbrew` is a
+  fixture path from the host-PATH test, not this machine.
 - `typecheck.txt`: `npm run typecheck` (exit 0).
 - `thread-panel.png`: earlier capture from `cb9c834`; not re-verified here.
