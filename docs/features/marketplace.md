@@ -50,13 +50,35 @@ See [file structure](../architecture/file-structure.md), [bot collaboration](bot
 
 ## Model selection
 
-The shared bot editor requests `agentModels {backend}` from the selected computer. The host starts an isolated ACP session under its probe directory with saved agent credentials, no MCP servers and no prompt, then closes the process. The response is `{models: [{id, name, description, options}], currentModelId}`.
+The shared bot editor requests `agentModels {backend}` from the selected computer. The host starts an isolated ACP session under its probe directory with saved agent credentials, no MCP servers and no prompt, then closes the process. The response is `{models: [{id, name, description, options}], currentModelId, fastMode}`.
 
 Discovery prefers ACP `configOptions` with category `model` (including grouped options), with conventional `model`/`models` IDs as a compatibility fallback. Older agents may expose `models.availableModels`. Model names and IDs come from the agent; Codync does not bundle a provider catalog. See the [ACP config option contract](https://agentclientprotocol.com/protocol/v1/session-config-options).
 
 A model's `options` are its own settings, such as reasoning effort or fast mode: `[{id, name, values: [{id, name}], default}]`. Every `initialize` sends `clientCapabilities._meta.parameterizedModelPicker: true`; Cursor then lists plain models and, on `cursor/list_available_models` (asked only of the Cursor backend), each model's settings as ACP select config options. Without the flag Cursor offers one fixed variant per model (`grok-4.7[reasoning_effort=high,fast=true]`) and rejects every other. The bot stores the picks as `modelOptions` (option id → value; an absent id means the agent's default). After choosing the model with `session/set_config_option`, the host sets each option the same way, on new sessions and again after `session/load`, because Cursor resumes a session on its last-used model. A bot saved with a variant ID keeps working: when the agent lists the plain model instead, the bracket's `key=value` pairs become options (Auto's `default[]` becomes `default`). Some values change Cursor's billing: a larger context (Grok 4.7 at 500K) turns on its Max Mode. Changing the model or agent clears the options; the host also clears them when an app that predates them changes the model.
 
 The editor keeps Default, shows available models in a dropdown, and resets the selected model when changing agents. Under the model it shows one picker per option (iPhone and desktop: a row each, named by the agent, with Default first; terminal UI: an Options row, ←→ to move, space to change). Errors are visible and retryable. Custom commands and agents without model discovery retain manual ID entry; an existing unlisted ID is preserved. The probe uses an isolated directory, so project-specific agent configuration can differ from the real bot session. Changing the model restarts the bot's agent sessions with fresh model context and preserves the stored chat history. The agent remains responsible for validating availability when a session starts.
+
+## Fast mode
+
+Claude Code's and Codex's ACP adapters offer Fast mode (faster replies for more usage) as a session config option: Claude's `fast`, Codex's `fast-mode`, each a `select` of `on`/`off` (a boolean for clients that opt into boolean options), listed only while the session's model supports it. Only such an `on`/`off` or boolean option counts: Cursor's `fast` (`true`/`false`) is one of a model's options (see Model selection), so Fast mode leaves it to the bot's `modelOptions`. `fastMode` in `agentModels` says whether the probe session offered it, so it reflects the agent's default model.
+
+The host keeps each live session's Fast mode option as the agent last listed it: from `session/new` (after the model switch, whose answer can change the options), `session/load`, `session/fork`, `session/set_config_option` answers and `config_option_update` notifications. Before every turn it switches the session to the bot's `fastMode` with `session/set_config_option` when the value differs, so changing the setting needs no agent restart and keeps the context. The adapters start each session or process at their own default, which is why a resumed session is switched again.
+
+The bot's runtime carries what the agent says (`fastModeSupport`, `fastModeIssue` in the bot payload):
+
+| `fastModeSupport` | Meaning |
+|---|---|
+| `unknown` | No session has listed its options yet. |
+| `offered` | The agent offers it for the session's model. |
+| `unsupported` | The session's model doesn't (the chat gets an info notice while the bot asks for it). |
+| `refused` | The agent turned it off right after the bot asked, or despite the switch: Claude does this for an account without extra usage and appends the reason to the option's description, which becomes `fastModeIssue`. The host stops asking until the user changes the setting or the host restarts. |
+
+`offered` and `unsupported` are kept across host restarts (`fast-mode.<bot>` in the kv store); a refusal isn't, so a new host asks again.
+
+Clients show Fast mode for an agent bot whose runtime says `offered` or `refused`, or while it's on (so it can be turned off); never for a group:
+
+- Composer: the desktop shows a ⚡ button next to +: filled while on, tinted with the warning color while refused (its tooltip gives the reason). The iPhone adds a Fast mode item to the + menu and a ⚡ badge on the + button while on. The terminal UI shows `⚡ fast` or `⚡ refused` in the chat header and toggles with `F`.
+- Bot settings: a Fast mode switch row under Model when the agent's model list offers it (never for a custom command), when the bot's own sessions do, or while it's on. While refused, its detail gives the reason. The terminal UI form always lists the field and notes when the agent doesn't offer it.
 
 ## Secure connection setup
 
