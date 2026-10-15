@@ -39,13 +39,18 @@ test('no hard-coded durations or curves are left on the welcome screen', () => {
 })
 
 test('the crew entrance animates a property the idle bob does not rewrite', () => {
-  // The bob rewrites `transform` every animation frame, so the entrance scales through the
-  // separate `scale` property: a `scale` transition inside `transform` never fires, and a
-  // `transform` transition would damp the bob instead.
-  assert.match(source, /\bscale:\s*shown \?/, 'the crew entrance should animate the `scale` property')
+  // The bob rewrites `transform` every animation frame, so the entrance scale cannot be a `scale`
+  // transition inside it (that never fires) or a sibling `scale` property (which composes outside
+  // `transform` and would scale the per-item offsets too). It scales on a nested element.
   assert.doesNotMatch(
     source,
     /transform: `[^`]*\$\{shown \? 1 : 0\.3\}/,
     'the entrance scale must not live inside the per-frame `transform`',
   )
+  assert.doesNotMatch(
+    source,
+    /^\s*scale:/m,
+    'a sibling `scale` composes outside `transform`, scaling the offsets; nest it instead',
+  )
+  assert.match(source, /scale:\s*shown \? '1' : '0\.3'/, 'the entrance should scale on a nested element')
 })

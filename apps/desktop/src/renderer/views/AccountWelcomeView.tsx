@@ -125,16 +125,18 @@ function WelcomeCrew({ shown }: { shown: boolean }) {
           key={m.shape}
           style={{
             position: 'absolute', left: '50%', top: '50%',
+            // The idle bob rewrites `transform` on every frame, so the entrance scale cannot live
+            // here: a `scale` transition inside `transform` never fires (that was the bug), and a
+            // `transform` transition would damp the bob. It also cannot be a sibling `scale`
+            // property, which composes outside `transform` and would scale the offsets below.
             transform: `translate(calc(-50% + ${m.x}px), calc(-50% + ${m.y + (reduce ? 0 : Math.sin(t * 1.3 + i * 1.7) * 5)}px))`,
-            // The entrance scale is its own property, not part of `transform`: the idle bob
-            // rewrites `transform` every frame, so a `scale` transition there would never fire
-            // (and a `transform` transition would damp the bob instead).
-            scale: shown ? '1' : '0.3',
             opacity: shown ? 1 : 0,
-            transition: `opacity var(--layout) ${i * 0.07}s, scale var(--layout) ${i * 0.07}s`,
+            transition: `opacity var(--layout) ${i * 0.07}s`,
           }}
         >
-          <CharacterAvatar shape={m.shape} color={m.color} size={m.size} mood={m.mood} />
+          <div style={{ scale: shown ? '1' : '0.3', transition: `scale var(--layout) ${i * 0.07}s` }}>
+            <CharacterAvatar shape={m.shape} color={m.color} size={m.size} mood={m.mood} />
+          </div>
         </div>
       ))}
     </div>
