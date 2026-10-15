@@ -1,6 +1,9 @@
 # PR #12 verification evidence
 
-Code revision tested: `4fd0b7c` on `forky/desktop-thread-panel`.
+Code revision tested: `4fd0b7c` on `forky/desktop-thread-panel`, which is where the modal A/B
+and the resizer walkthrough below were measured. The upstream v2.17.1 merge (`9fc004e`) left the
+code those measurements cover untouched: `overlay.css` and `overlay-layers.test.ts` are
+byte-identical at both revisions.
 Baseline for the modal fix: `057d71f` (this branch before the fix).
 
 ## The reported modal bug: cause and fix
@@ -66,6 +69,6 @@ thread to open, so the seeded demo was used; it runs the same components and CSS
 ## Files
 
 - `overlay-click-ab.json`: the A/B measurement described above.
-- `tests.txt`: `npm test` (152 passed, 0 failed).
+- `tests.txt`: `npm test` (156 passed, 0 failed) at `9fc004e`.
 - `typecheck.txt`: `npm run typecheck` (exit 0).
 - `thread-panel.png`: earlier capture from `cb9c834`; not re-verified here.
