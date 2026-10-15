@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EMAIL, GITHUB } from "../links";
 
 export const metadata: Metadata = { title: "Terms of Use", alternates: { canonical: "/terms" } };
 
@@ -8,7 +9,7 @@ export default function Terms() {
     <main className="flex-1 flex flex-col items-center px-6 py-16">
       <article className="max-w-2xl w-full space-y-6">
         <h1 className="text-3xl font-bold text-white">Terms of Use</h1>
-        <p className="text-neutral-400 text-sm">Last updated: October 8, 2026</p>
+        <p className="text-neutral-400 text-sm">Last updated: October 15, 2026</p>
 
         <Section title="1. Acceptance of Terms">
           By using Codync you agree to these terms. If you don&apos;t agree, don&apos;t use the app.
@@ -55,8 +56,9 @@ export default function Terms() {
         </Section>
 
         <Section title="10. Contact">
-          Questions? Open an issue at{" "}
-          <a href="https://github.com/leepokai/Codync/issues" className="text-white underline">github.com/leepokai/Codync/issues</a>.
+          Questions? Email{" "}
+          <a href={`mailto:${EMAIL}`} className="text-white underline">{EMAIL}</a> or open an issue at{" "}
+          <a href={`${GITHUB}/issues`} className="text-white underline">github.com/leepokai/Codync/issues</a>.
         </Section>
 
         <div className="pt-4">

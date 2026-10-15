@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DiscordLogo, GithubLogo } from "@phosphor-icons/react/ssr";
 import DownloadButton from "./download-button";
-import { DISCORD, GITHUB } from "../links";
+import { DISCORD, EMAIL, GITHUB } from "../links";
 
 const nav: [href: string, label: string][] = [
   ["/#product", "Product"],
@@ -59,7 +59,7 @@ const footerLinks: [label: string, href: string][] = [
   ["Terms", "/terms"],
   ["Privacy", "/privacy"],
   ["Discord", DISCORD],
-  ["Contact", `${GITHUB}/issues`],
+  ["Contact", `mailto:${EMAIL}`],
 ];
 
 export function SiteFooter() {
