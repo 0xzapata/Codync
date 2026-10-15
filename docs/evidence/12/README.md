@@ -61,6 +61,10 @@ thread to open, so the seeded demo was used; it runs the same components and CSS
 - Drag: 420 -> 492 px. Keyboard: Home -> 280 (minimum), End -> 692 (maximum).
 - An extreme drag clamps at the bound instead of passing it (692).
 - Cancelling a drag discards the preview.
+- These figures were recorded before the release-point fix (`5b341b0`): a steady drag delivers
+  its moves, so the walkthrough cannot show the ordering bug the fix addresses. That path is
+  pinned by `side-panel-drag.test.ts` instead, which fails if the saved width is read from the
+  last delivered move rather than from the release position.
 - Reduced motion is satisfied by construction: `@media (prefers-reduced-motion: reduce)` sets
   `--layout: 0s`, and `.side-panel.resizing { transition: none }` stops width animation while
   dragging. The live reduced-motion probe did not register a drag in a fresh headless tab, so this
@@ -69,6 +73,6 @@ thread to open, so the seeded demo was used; it runs the same components and CSS
 ## Files
 
 - `overlay-click-ab.json`: the A/B measurement described above.
-- `tests.txt`: `npm test` (156 passed, 0 failed) at `9fc004e`.
+- `tests.txt`: `npm test` (156 passed, 0 failed) at the current head.
 - `typecheck.txt`: `npm run typecheck` (exit 0).
 - `thread-panel.png`: earlier capture from `cb9c834`; not re-verified here.
