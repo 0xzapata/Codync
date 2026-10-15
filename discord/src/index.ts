@@ -7,6 +7,7 @@
 import { DISCORD, earnedRoles, githubLogin, grant, join, names, notify, profile } from "./guild.ts";
 import { sign, verify } from "./hmac.ts";
 import { json, page } from "./http.ts";
+import { mentions } from "./mentions.ts";
 import { webhook } from "./webhook.ts";
 
 export interface Env {
@@ -18,6 +19,8 @@ export interface Env {
   GITHUB_TOKEN: string;
   GITHUB_WEBHOOK_SECRET: string;
   SESSION_SECRET: string;
+  /** Signs the release notes Auto Tag sends to /mentions. */
+  MENTIONS_SECRET: string;
   GUILD_ID: string;
   CONTRIBUTOR_ROLE_ID: string;
   REPORTER_ROLE_ID: string;
@@ -36,6 +39,7 @@ export default {
         case "/callback": return await discordCallback(req, url, env);
         case "/github/callback": return await githubCallback(req, url, env);
         case "/webhook": return await webhook(req, env);
+        case "/mentions": return await mentions(req, env);
         default: return page(404, "Not found", "");
       }
     } catch (e) {

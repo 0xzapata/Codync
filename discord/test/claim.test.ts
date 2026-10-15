@@ -9,7 +9,7 @@ const links = new Map<string, string>();
 const env = {
   DISCORD_CLIENT_ID: "app", DISCORD_CLIENT_SECRET: "secret", DISCORD_BOT_TOKEN: "bot",
   GITHUB_CLIENT_ID: "ghapp", GITHUB_CLIENT_SECRET: "ghsecret", GITHUB_TOKEN: "gh", GITHUB_WEBHOOK_SECRET: "hook",
-  SESSION_SECRET: "session", GUILD_ID: "guild", CONTRIBUTOR_ROLE_ID: "contributor", REPORTER_ROLE_ID: "reporter",
+  SESSION_SECRET: "session", MENTIONS_SECRET: "notes", GUILD_ID: "guild", CONTRIBUTOR_ROLE_ID: "contributor", REPORTER_ROLE_ID: "reporter",
   STAFF_CHANNEL_ID: "staff", REPO: "leepokai/Codync",
   LINKS: { get: async (k: string) => links.get(k) ?? null, put: async (k: string, v: string) => void links.set(k, v) },
 } as never;
@@ -151,4 +151,26 @@ assert.deepEqual(calls, []);
 calls = stub({ member: false });
 assert.equal(await hook("pull_request", pr(true)), 204);
 assert.deepEqual(calls, []);
+
+// Release notes: linked logins become mentions, only for notes signed with the mentions secret.
+links.clear();
+links.set("github:7", "42");
+globalThis.fetch = (async (input: string) => {
+  const login = String(input).match(/\/users\/([^/]+)$/)?.[1];
+  if (login === "octo") return Response.json({ id: 7 });
+  if (login === "other") return Response.json({ id: 8 });
+  if (login) return new Response(null, { status: 404 });
+  throw new Error(`unexpected ${input}`);
+}) as typeof fetch;
+const notes = async (body: string, secret = "notes") => {
+  const res = await worker.fetch(new Request("https://discord.test/mentions", {
+    method: "POST", body, headers: { "X-Signature": await sign(secret, body) },
+  }), env);
+  return res.status === 200 ? res.json() : res.status;
+};
+assert.equal(await notes("Thanks @octo", "wrong"), 401);
+assert.deepEqual(await notes("- Fast mode. Thanks @octo (#101).\n@Octo, @other, @nobody, a@octo.dev, `@octo_x`"), {
+  text: "- Fast mode. Thanks <@42> (#101).\n<@42>, @other, @nobody, a@octo.dev, `@octo_x`",
+  users: ["42"],
+});
 console.log("claim tests ok");

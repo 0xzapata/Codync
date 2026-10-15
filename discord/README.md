@@ -12,6 +12,9 @@ the GitHub roles.
    or role is posted to #moderator-only (no pings).
 4. `/webhook` takes the repo's `pull_request` and `issues` events: a linked member gets the role the moment
    their pull request merges or their issue opens.
+5. `/mentions` takes release notes signed with `MENTIONS_SECRET` and turns each `@login` of a linked member into
+   a Discord mention. Auto Tag (`.github/workflows/auto-tag.yml`) uses it so the #releases post pings the people
+   it thanks; the links stay private.
 
 `.github/workflows/contributor.yml` comments the link on a contributor's first merged pull request and first
 issue. The onboarding Server Guide has a "Link your GitHub" to-do that leads to the link in #welcome.
@@ -36,6 +39,7 @@ npx wrangler secret put GITHUB_CLIENT_SECRET   # the OAuth app's
 npx wrangler secret put GITHUB_TOKEN           # classic token, no scopes (public read only)
 npx wrangler secret put GITHUB_WEBHOOK_SECRET  # the repo webhook's
 npx wrangler secret put SESSION_SECRET         # any random string (openssl rand -hex 32)
+npx wrangler secret put MENTIONS_SECRET        # same value as the repo secret DISCORD_MENTIONS_SECRET
 npm run deploy
 ```
 

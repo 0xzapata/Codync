@@ -30,6 +30,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_RELEASES_WEBHOOK: ${{ secrets.DISCORD_RELEASES_WEBHOOK }}
+          DISCORD_MENTIONS_SECRET: ${{ secrets.DISCORD_MENTIONS_SECRET }}
         run: |
           TAG="v${{ steps.version.outputs.version }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
@@ -42,10 +43,17 @@ jobs:
             tools/release-notes.sh "$TAG" > notes.md
             gh release create "$TAG" --verify-tag --title "$TAG" --notes-file notes.md --generate-notes
             # Announce it in the Discord server's #releases channel. A release created with
-            # GITHUB_TOKEN triggers no `release` workflow, so this happens here.
-            jq -n --arg tag "$TAG" --arg url "https://github.com/$GITHUB_REPOSITORY/releases/tag/$TAG" --rawfile notes notes.md \
-              '{embeds: [{title: "Codync \($tag)", url: $url, color: 16777215,
-                description: (if ($notes | test("\\S")) then $notes[0:4000] else "See the release notes." end)}]}' |
+            # GITHUB_TOKEN triggers no `release` workflow, so this happens here. The Discord Worker turns
+            # each @login linked to a member into a mention, which the message pings (discord/README.md).
+            sig=$(openssl dgst -sha256 -hmac "$DISCORD_MENTIONS_SECRET" -r notes.md | cut -d' ' -f1) || true
+            mentions=$(curl -fsS -X POST -H "X-Signature: $sig" --data-binary @notes.md https://discord.codync.dev/mentions) ||
+              { echo "::warning::Couldn't look up Discord mentions"; mentions='{"users": []}'; }
+            jq -n --arg tag "$TAG" --arg url "https://github.com/$GITHUB_REPOSITORY/releases/tag/$TAG" \
+              --rawfile notes notes.md --argjson mentions "$mentions" \
+              '($mentions.text // $notes) as $notes | $mentions.users as $users |
+              {embeds: [{title: "Codync \($tag)", url: $url, color: 16777215,
+                description: (if ($notes | test("\\S")) then $notes[0:4000] else "See the release notes." end)}]} +
+              if ($users | length) > 0 then {content: ($users | map("<@\(.)>") | join(" ")), allowed_mentions: {users: $users}} else {} end' |
               curl -fsS -X POST -H "Content-Type: application/json" --data @- "$DISCORD_RELEASES_WEBHOOK" ||
               echo "::warning::Couldn't post $TAG to Discord"
           fi

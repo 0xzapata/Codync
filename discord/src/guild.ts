@@ -27,6 +27,14 @@ export async function githubLogin(env: Env, githubId: string): Promise<string> {
   return (await json<{ login: string }>(`https://api.github.com/user/${githubId}`, github(env))).login;
 }
 
+/** The GitHub user id behind a login, or null when there's no such account. */
+export async function githubId(env: Env, login: string): Promise<string | null> {
+  const res = await fetch(`https://api.github.com/users/${login}`, github(env));
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`user ${login} ${res.status}: ${await res.text()}`);
+  return String((await res.json<{ id: number }>()).id);
+}
+
 /** Roles the GitHub account has earned in the repo so far. */
 export async function earnedRoles(env: Env, login: string): Promise<Role[]> {
   const all = roles(env);

@@ -89,7 +89,9 @@ and `memoryCall`; agents receive their real ACP session binding, including indep
 ## Verification
 
 `packaging/engram/test-runtime.py` downloads and checksum-verifies the same pinned binary used by the host.
-Set `CODYNC_TEST_ENGRAM` to its output path, then run:
+The integration tests run it themselves (once; the copy stays in `host/target/engram-test-runtime`), so
+their hosts don't each download Engram; `CODYNC_TEST_ENGRAM` points them at another copy. The last
+command below needs `CODYNC_TEST_ENGRAM` set to the script's output:
 
 ```sh
 cd host
