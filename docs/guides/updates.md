@@ -19,6 +19,12 @@ installer takes over. The relaunched app comes to the front (macOS doesn't activ
 the installer relaunches from the background, so a one-shot `updateRelaunchInFront`
 preference asks for it).
 
+While a release is available, an **Update** badge sits right of **Extensions** in the
+chat window's sidebar (`UpdateBadge`). After a confirmation it restarts into the release
+(`updates.install()`): straight away when it is staged, otherwise once its download
+finishes, without a second click. The badge hides while the release waits for the iPhone
+app and disappears once Codync runs the latest version.
+
 The app checks daily (hourly while a release waits for the iPhone app, below).
 Automatic installation waits until no Codync window is focused, there has been no
 keyboard/mouse input for ten minutes, and the local host reports that it is idle.

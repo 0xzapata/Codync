@@ -13,6 +13,15 @@ snapshot="$git_dir/precommit-snapshot"
 lock="$git_dir/precommit.lock"
 locked=""
 
+# Runs a command, and everything it starts, for at most $1 seconds: a hung test would otherwise hold
+# the commit, and every other commit waiting on the lock, until someone notices.
+within() {
+    perl -e '$s = shift; $pid = fork // die "fork: $!\n";
+        if (!$pid) { setpgrp; exec @ARGV or die "exec: $!\n" }
+        $SIG{ALRM} = sub { kill "KILL", -$pid; die "Still running after $s s, so a test hangs: stopped it.\n" };
+        alarm $s; waitpid $pid, 0; exit(($? >> 8) || ($? & 127))' "$@"
+}
+
 staged_copy() {
     [ -n "$locked" ] && return
     until mkdir "$lock" 2>/dev/null; do
@@ -33,9 +42,9 @@ if touches '^(host/|packaging/(updates|engram)/|docs/reference/fixtures/remote-r
     # CI's pinned memory runtime (fetched once): without it every test turn waits on installing one.
     engram=$(python3 "$repo/packaging/engram/test-runtime.py")
     (cd "$snapshot/host" && export CARGO_TARGET_DIR="$repo/host/target/precommit" CODYNC_TEST_ENGRAM="$engram" &&
-        cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test &&
-        cargo test --test memory_e2e -- --ignored &&
-        cargo test --bin codync-host native_memory_survives_restart -- --ignored)
+        cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --no-run &&
+        within 300 sh -c 'cargo test && cargo test --test memory_e2e -- --ignored &&
+            cargo test --bin codync-host native_memory_survives_restart -- --ignored')
 fi
 
 if touches '^apps/desktop/'; then

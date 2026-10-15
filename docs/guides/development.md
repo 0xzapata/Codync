@@ -94,7 +94,8 @@ fetched once into `host/target/engram-test-runtime`), desktop, cloud and relay (
 `npm test`), Linux screen helper formatting, and a parse of the macOS screen helper's Swift
 sources (on macOS). It checks the staged files only, in a copy under `.git/precommit-snapshot`,
 so other agents' uncommitted edits in the same checkout neither break nor rescue a commit; the
-host builds into `host/target/precommit`. The npm checks reuse each package's `node_modules`
+host builds into `host/target/precommit`, and its tests are stopped after 5 minutes so a hung
+test fails the commit instead of holding it. The npm checks reuse each package's `node_modules`
 (run `npm ci` there first).
 
 Left to CI: the iOS Kit tests (an iPhone simulator) and the platform builds (Linux screen
@@ -110,7 +111,7 @@ Versions are defined in `apps/project.yml` (`MARKETING_VERSION`), `host/Cargo.to
 
 ## GitHub releases
 
-Auto Tag (`.github/workflows/auto-tag.yml`) creates each `v*` release right after pushing the tag, before the host and desktop jobs upload to it. Its description comes from `tools/release-notes.sh`: the `## Summary` of the PR that merged the version bump into `main` (or the PR's opening text without that heading), else the `feat`/`fix` commits since the previous tag, followed by GitHub's generated PR list and compare link. Write the release PR's Summary for people reading the release page. The same description is posted to the Discord server's #releases channel through the webhook in the `DISCORD_RELEASES_WEBHOOK` secret (a failed post only leaves a warning on the run).
+Auto Tag (`.github/workflows/auto-tag.yml`) creates each `v*` release right after pushing the tag, before the host and desktop jobs upload to it. Its description comes from `tools/release-notes.sh`: the `## Summary` of the PR that merged the version bump into `main` (or the PR's opening text without that heading), else the `feat`/`fix` commits since the previous tag, followed by GitHub's generated PR list and compare link. Write the release PR's Summary for people reading the release page. The same description is posted to the Discord server's #releases channel through the webhook in the `DISCORD_RELEASES_WEBHOOK` secret (a failed post only leaves a warning on the run); each `@login` there whose GitHub account is linked on the Discord Worker becomes a mention that pings them (`DISCORD_MENTIONS_SECRET`, [discord/README.md](../../discord/README.md)).
 
 ## iOS releases (Xcode Cloud)
 

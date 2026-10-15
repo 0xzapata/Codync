@@ -17,4 +17,4 @@ is free for personal use: your own computers and devices. Hosted, resold or mult
 must run their own (source in [`cloud/`](cloud/), point hosts at it with `CODYNC_CLOUD_URL`).
 Computers or accounts that break this are blocked. Full terms: <https://codync.dev/terms>.
 
-Questions or permission requests: open an issue at <https://github.com/leepokai/Codync/issues>.
+Questions or permission requests: email <kevin@codync.dev> or open an issue at <https://github.com/leepokai/Codync/issues>.

@@ -28,7 +28,11 @@ whole flow (`apps/desktop/src/shared/update-action.ts`, the same label in the tr
 Updates page and the update-needed card): **Check for updates** → **Update to <version>**
 → **Downloading… N%** (the Updates page adds a progress bar) → **Restart to update** →
 **Restarting…**. A finished download never quits the app on its own; the person restarts,
-or it installs once idle. The TUI action list has **Check for updates**. Download and
+or it installs once idle. While a release is available (and not waiting for the iPhone
+app), a filled arrow badge sits right of **Extensions** in the sidebar footer (under the
+Extensions icon in the collapsed rail), tooltip **Update**; it asks **Update to Codync
+<version>?** and then restarts into the release, downloading it first if needed, and it
+is gone once the app runs the latest version. The TUI action list has **Check for updates**. Download and
 install go through electron-updater (`apps/desktop/src/main/updates.ts`); there is no
 separate update window.
 
@@ -81,7 +85,7 @@ On iPhone, provider identity and activity presentation are shared with widgets i
 
 The [2026-09-25 audit](../archive/ui-audit-2026-09-25.md) is historical. Its old line numbers and recommendations are not the current UI policy or a list of confirmed open bugs.
 
-Model discovery keeps loading and refresh in one fixed-size slot beside the Model picker. Refresh retains the current catalog while loading, and loading does not add a separate row to the settings card. The Model label keeps its intrinsic width; the model picker takes the remaining width and truncates long names, with the full name available in its tooltip and menu.
+Model discovery keeps loading and refresh in one fixed-size slot beside the Model picker. Refresh retains the current catalog while loading, and loading does not add a separate row to the settings card. The Model label keeps its intrinsic width; the model picker takes the remaining width and truncates long names, with the full name available in its tooltip and menu. Fast mode is a separate switch row below it (see [model selection](../features/marketplace.md#fast-mode)).
 
 ## Desktop conversation details
 

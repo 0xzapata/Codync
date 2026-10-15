@@ -244,6 +244,13 @@ For release-by-release changes, see [GitHub Releases](https://github.com/leepoka
 
 Clients and the host each name the oldest version of the other they still work with (`minApp` in the host's `hello`, `minHost` in each client), so an app can meet an older or newer host. Details: [compatibility](docs/reference/compatibility.md).
 
+## Contact
+
+- Email: [kevin@codync.dev](mailto:kevin@codync.dev)
+- Questions and bug reports: [GitHub Issues](https://github.com/leepokai/Codync/issues) or [Discord](https://discord.gg/KBAX3Qznxh)
+- Security issues: report privately as described in [SECURITY.md](SECURITY.md) (GitHub private reporting or email)
+- Community rules: [Code of Conduct](CODE_OF_CONDUCT.md)
+
 ## Credits
 
 The desktop notch island's design is inspired by the work of [@novra.design](https://www.instagram.com/novra.design/).
