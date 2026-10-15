@@ -4,7 +4,7 @@ compatibility_date = "2026-09-01"
 routes = [{ pattern = "discord.codync.dev", custom_domain = true }]
 
 # Secrets: DISCORD_CLIENT_SECRET, DISCORD_BOT_TOKEN, GITHUB_CLIENT_SECRET, GITHUB_TOKEN, GITHUB_WEBHOOK_SECRET,
-# SESSION_SECRET (see README.md).
+# SESSION_SECRET, MENTIONS_SECRET (see README.md).
 [vars]
 DISCORD_CLIENT_ID = "1559877519933440084"
 GITHUB_CLIENT_ID = "Ov23lihjSv0zqUceCMcV"
