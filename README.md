@@ -248,7 +248,7 @@ Clients and the host each name the oldest version of the other they still work w
 
 - Email: [kevin@codync.dev](mailto:kevin@codync.dev)
 - Questions and bug reports: [GitHub Issues](https://github.com/leepokai/Codync/issues) or [Discord](https://discord.gg/KBAX3Qznxh)
-- Security issues: follow [SECURITY.md](SECURITY.md) (private reporting on GitHub, not email)
+- Security issues: report privately as described in [SECURITY.md](SECURITY.md) (GitHub private reporting or email)
 - Community rules: [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## Credits

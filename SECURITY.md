@@ -32,7 +32,7 @@ We close these without a reply:
 
 ## How to report
 
-Use [GitHub private vulnerability reporting](https://github.com/leepokai/Codync/security/advisories/new). Don't open a public issue. Reports sent by email aren't tracked.
+Report privately: use [GitHub private vulnerability reporting](https://github.com/leepokai/Codync/security/advisories/new) or email [kevin@codync.dev](mailto:kevin@codync.dev). Don't open a public issue.
 
 A report must include:
 
