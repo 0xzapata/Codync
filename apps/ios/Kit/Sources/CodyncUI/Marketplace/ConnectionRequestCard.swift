@@ -4,6 +4,7 @@ import SwiftUI
 
 /// Credentials go through the setup API; only the request's state is a chat entry.
 struct ConnectionRequestCard: View {
+    var motion = MotionGate()
     let entry: Entry
     let request: ConnectionRequest
     @Environment(BotStore.self) private var model
@@ -69,7 +70,7 @@ struct ConnectionRequestCard: View {
             defer { busy = false }
             do {
                 if request.kind == "app", let toolkit = request.toolkit {
-                    withAnimation(Motion.layout) { app = ComposioApp(slug: toolkit, name: request.title) }
+                    motion.animate(Motion.layout) { app = ComposioApp(slug: toolkit, name: request.title) }
                 } else if request.kind == "login" {
                     try await client.finishConnectionRequest(entry.id, value: value, username: username)
                     value = ""
@@ -84,7 +85,7 @@ struct ConnectionRequestCard: View {
                     try await client.finishConnectionRequest(entry.id, connectorId: id)
                 } else if let name = request.registryName {
                     let loaded = try await client.connectorInfo(name)
-                    withAnimation(Motion.layout) { item = loaded }
+                    motion.animate(Motion.layout) { item = loaded }
                 }
             } catch { self.error = error.localizedDescription }
         }
@@ -102,6 +103,7 @@ struct ConnectionRequestCard: View {
 }
 
 struct CredentialsView: View {
+    var motion = MotionGate()
     @Environment(BotStore.self) private var model
     @State private var selected: InstalledConnector?
     @State private var token = ""
@@ -120,7 +122,7 @@ struct CredentialsView: View {
                 }
                 CardSection("Saved connections") {
                     ForEach(model.installedConnectors.filter { !$0.keys.isEmpty }) { connector in
-                        Button { withAnimation(Motion.layout) { selected = connector } } label: {
+                        Button { motion.animate(Motion.layout) { selected = connector } } label: {
                             HStack { Text(connector.name); Spacer(); Image(systemName: "chevron.right") }
                         }
                         .buttonStyle(.plain)
@@ -174,6 +176,7 @@ struct CredentialsView: View {
 
 /// Website and app logins bots type through the computer tool; passwords stay hidden.
 private struct LoginsSection: View {
+    var motion = MotionGate()
     @Environment(BotStore.self) private var model
     @State private var logins: [SavedLogin] = []
     @State private var site = ""
@@ -235,7 +238,7 @@ private struct LoginsSection: View {
         Task {
             do {
                 try await client.removeLogin(login.id)
-                withAnimation(Motion.layout) { logins.removeAll { $0.id == login.id } }
+                motion.animate(Motion.layout) { logins.removeAll { $0.id == login.id } }
             } catch { self.error = error.localizedDescription }
         }
     }

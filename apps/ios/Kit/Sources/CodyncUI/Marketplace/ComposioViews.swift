@@ -7,6 +7,7 @@ import SwiftUI
 
 /// The Marketplace's "Apps" section.
 struct ComposioSection: View {
+    var motion = MotionGate()
     let query: String
     /// Bumped by the Marketplace when the user submits a search.
     let searchToken: Int
@@ -33,7 +34,7 @@ struct ComposioSection: View {
                         ) {
                             TileIcon(systemName: "square.grid.3x3")
                         } add: {
-                            withAnimation(Motion.layout) { settingUp = true }
+                            motion.animate(Motion.layout) { settingUp = true }
                         }
                     }
                 } else if loading {
@@ -52,14 +53,14 @@ struct ComposioSection: View {
                             ) {
                                 AppLogo(url: app.logo, name: app.name)
                             } add: {
-                                withAnimation(Motion.layout) { connecting = app }
+                                motion.animate(Motion.layout) { connecting = app }
                             }
                         }
                     }
                 }
                 if !loading, apps.hasHiddenItems, status?.configured == true {
                     Button("Load more apps") {
-                        withAnimation(Motion.fade) { apps.revealMore() }
+                        motion.animate(Motion.fade) { apps.revealMore() }
                     }
                     .buttonStyle(SecondaryButtonStyle())
                     .frame(maxWidth: .infinity)
@@ -68,7 +69,7 @@ struct ComposioSection: View {
                     Text(error).font(.footnote).foregroundStyle(Palette.danger)
                 }
                 if status?.configured == true {
-                    Button("Composio settings", systemImage: "key") { withAnimation(Motion.layout) { settingUp = true } }
+                    Button("Composio settings", systemImage: "key") { motion.animate(Motion.layout) { settingUp = true } }
                         .labelStyle(.titleAndIcon)
                         .buttonStyle(.plain)
                         .font(.footnote)

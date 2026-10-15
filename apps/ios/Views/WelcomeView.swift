@@ -4,6 +4,7 @@ import SwiftUI
 
 /// First launch, before any setup: who the bots are, a glimpse of talking to one, one way forward.
 struct WelcomeView: View {
+    var motion = MotionGate()
     let start: () -> Void
     @Environment(AccountSession.self) private var account
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -23,7 +24,7 @@ struct WelcomeView: View {
             if reduceMotion { beat = 4; return }
             for next in 1...4 {
                 try? await Task.sleep(for: .milliseconds(next == 1 ? 150 : 280))
-                withAnimation(.spring(duration: 0.6, bounce: 0.25)) { beat = next }
+                motion.animate(.spring(duration: 0.6, bounce: 0.25)) { beat = next }
             }
         }
     }
@@ -97,7 +98,7 @@ private struct Crew: View {
                         .offset(x: m.x, y: m.y + (reduceMotion ? 0 : sin(t * 1.3 + Double(i) * 1.7) * 5))
                         .scaleEffect(shown ? 1 : 0.3)
                         .opacity(shown ? 1 : 0)
-                        .animation(.spring(duration: 0.7, bounce: 0.4).delay(Double(i) * 0.07), value: shown)
+                        .motionAnimation(.spring(duration: 0.7, bounce: 0.4).delay(Double(i) * 0.07), value: shown)
                 }
             }
         }

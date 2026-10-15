@@ -88,7 +88,7 @@ private struct StyledButton: View {
             .background(fill, in: Capsule())
             .opacity(isEnabled ? (configuration.isPressed ? 0.85 : 1) : 0.4)
             .scaleEffect(configuration.isPressed ? Motion.pressScale : 1)
-            .animation(Motion.press, value: configuration.isPressed)
+            .motionAnimation(Motion.press, value: configuration.isPressed)
             .contentShape(Capsule())
     }
 }

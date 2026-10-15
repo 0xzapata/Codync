@@ -2,6 +2,7 @@ import CodyncKit
 import SwiftUI
 
 struct MemoryEditorView: View {
+    var motion = MotionGate()
     let memory: MemoryStore
     @State var draft: MemoryDraft
     @Environment(\.dismissModal) private var dismiss
@@ -18,7 +19,7 @@ struct MemoryEditorView: View {
                     HStack(spacing: 14) {
                         ForEach(["project", "personal", "global"], id: \.self) { scope in
                             Button(scope == "personal" ? "About you" : scope == "global" ? "General" : "Work") {
-                                withAnimation(Motion.layout) { draft.scope = scope }
+                                motion.animate(Motion.layout) { draft.scope = scope }
                             }
                             .fontWeight(draft.scope == scope ? .semibold : .regular)
                         }

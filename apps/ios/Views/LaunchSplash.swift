@@ -6,6 +6,7 @@ import SwiftUI
 /// computers connect and catch up, then zooms away onto a list that's already current.
 /// Held at least `shortest` so the motion reads, never past `longest` (the cached list is behind it).
 struct LaunchSplash: View {
+    var motion = MotionGate()
     let stores: [BotStore]
     let done: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -29,7 +30,7 @@ struct LaunchSplash: View {
         .background(Palette.background)
         .accessibilityLabel("Connecting")
         .task {
-            withAnimation(.spring(duration: 0.5, bounce: 0.35)) { shown = true }
+            motion.animate(.spring(duration: 0.5, bounce: 0.35)) { shown = true }
             try? await Task.sleep(for: Self.shortest)
             waited = true
             try? await Task.sleep(for: Self.longest - Self.shortest)

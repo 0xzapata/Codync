@@ -22,7 +22,7 @@ struct SignInButtons: View {
             }
             .buttonStyle(.primary)
             .disabled(account.isBusy)
-            .animation(Motion.fade, value: account.isBusy)
+            .motionAnimation(Motion.fade, value: account.isBusy)
             GoogleSignInButton()
         }
     }

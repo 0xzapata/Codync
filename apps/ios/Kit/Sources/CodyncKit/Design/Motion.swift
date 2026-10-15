@@ -44,6 +44,6 @@ public struct PressScale: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? Motion.pressScale : 1)
-            .animation(Motion.press, value: configuration.isPressed)
+            .motionAnimation(Motion.press, value: configuration.isPressed)
     }
 }

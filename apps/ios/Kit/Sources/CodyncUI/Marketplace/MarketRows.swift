@@ -23,6 +23,7 @@ struct ItemGrid<Content: View>: View {
 }
 
 struct AgentCard: View {
+    var motion = MotionGate()
     let backend: Backend
     let action: () -> Void
     @State private var hovering = false
@@ -55,12 +56,13 @@ struct AgentCard: View {
             .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(PressScale())
-        .onHover { h in withAnimation(Motion.hover) { hovering = h } }
+        .onHover { h in motion.animate(Motion.hover) { hovering = h } }
         .help(backend.name)
     }
 }
 
 struct MarketRow<Icon: View>: View {
+    var motion = MotionGate()
     let title: String
     let subtitle: String
     let added: Bool
@@ -107,12 +109,13 @@ struct MarketRow<Icon: View>: View {
         .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .onTapGesture { rowAction?() }
         .accessibilityAddTraits(rowAction == nil ? [] : .isButton)
-        .onHover { h in withAnimation(Motion.hover) { hovering = h } }
+        .onHover { h in motion.animate(Motion.hover) { hovering = h } }
     }
 }
 
 /// Placeholder rows while a list loads, shaped like the real ones.
 struct SkeletonGrid: View {
+    var motion = MotionGate()
     @State private var dim = false
 
     var body: some View {
@@ -131,9 +134,9 @@ struct SkeletonGrid: View {
                 .padding(.vertical, 10)
             }
         }
-        .opacity(dim ? 0.5 : 1)
-        .animation(.easeInOut(duration: 0.9).repeatForever(), value: dim)
-        .onAppear { dim = true }
+        .opacity(motion.isReduced ? 1 : dim ? 0.5 : 1)
+        .motionAnimation(.easeInOut(duration: 0.9).repeatForever(), value: dim)
+        .onChange(of: motion.isReduced, initial: true) { _, reduced in dim = !reduced }
     }
 }
 

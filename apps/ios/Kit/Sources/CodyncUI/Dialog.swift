@@ -125,7 +125,7 @@ private struct DialogButtonStyle: ButtonStyle {
             .background(destructive ? Palette.danger : (prominent ? Palette.accentFill : Palette.bubbleUser), in: Capsule())
             .opacity(configuration.isPressed ? 0.85 : 1)
             .scaleEffect(configuration.isPressed ? Motion.pressScale : 1)
-            .animation(Motion.press, value: configuration.isPressed)
+            .motionAnimation(Motion.press, value: configuration.isPressed)
             .contentShape(Capsule())
     }
 }

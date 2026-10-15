@@ -611,7 +611,7 @@ struct BotLiveActivity: Widget {
                     .lineLimit(1)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                    .animation(Motion.activityPhase, value: state)
+                    .motionAnimation(Motion.activityPhase, value: state)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     ActivityIslandFooter(state: state, startedAt: context.state.startedAt, link: context.attributes.link)
@@ -646,7 +646,7 @@ struct BotLiveActivity: Widget {
                 BotActivityIndicator(state: state, size: size).transition(.opacity)
             }
         }
-        .animation(Motion.activityPhase, value: state.phase)
+        .motionAnimation(Motion.activityPhase, value: state.phase)
         .accessibilityLabel(state.title)
     }
 
@@ -663,7 +663,7 @@ struct BotLiveActivity: Widget {
                     .transition(.opacity)
             }
         }
-        .animation(Motion.activityPhase, value: state.phase)
+        .motionAnimation(Motion.activityPhase, value: state.phase)
     }
 }
 

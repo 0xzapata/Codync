@@ -43,6 +43,7 @@ struct NodeNotice: View {
 /// the computer has none, then sign in. Sign-in options come from the agent itself (ACP),
 /// plus Codync's own command for CLIs it knows. Bots are made from New chat, not here.
 struct AgentSheet: View {
+    var motion = MotionGate()
     let initial: Backend
     @Environment(BotStore.self) private var model
     @State private var route: SetupRoute?
@@ -80,7 +81,7 @@ struct AgentSheet: View {
     }
 
     @ViewBuilder private func routed(_ route: SetupRoute) -> some View {
-        let back = { withAnimation(Motion.layout) { self.route = nil } }
+        let back = { motion.animate(Motion.layout) { self.route = nil } }
         switch route {
         case .install: SetupTerminalView(backend: backend, step: .install, back: back)
         case .node: SetupTerminalView(backend: backend, step: .node, back: back)
@@ -90,7 +91,7 @@ struct AgentSheet: View {
     }
 
     private func go(_ route: SetupRoute) {
-        withAnimation(Motion.layout) { self.route = route }
+        motion.animate(Motion.layout) { self.route = route }
     }
 
     private var overview: some View {

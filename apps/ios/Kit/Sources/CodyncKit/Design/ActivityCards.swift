@@ -58,7 +58,7 @@ public struct ActivityAvatar: View {
 
     public var body: some View {
         CharacterAvatar(shape: shape, color: color, size: size, mood: state.mood, still: true)
-            .animation(Motion.activityPhase, value: state.mood)
+            .motionAnimation(Motion.activityPhase, value: state.mood)
     }
 }
 
@@ -147,7 +147,7 @@ public struct BotActivityCard<Face: View, Mark: View>: View {
             }
         }
         .padding(16)
-        .animation(Motion.activityPhase, value: state)
+        .motionAnimation(Motion.activityPhase, value: state)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(name), \(state.title). \(state.caption)")
     }
@@ -189,7 +189,7 @@ public struct BotActivityIndicator: View {
         }
         .frame(width: size, height: size)
         .foregroundStyle(state.tint)
-        .animation(Motion.activityPhase, value: state.phase)
+        .motionAnimation(Motion.activityPhase, value: state.phase)
         .accessibilityElement()
         .accessibilityLabel(state.title)
     }
@@ -221,7 +221,7 @@ public struct ActivityIslandFooter: View {
             }
         }
         .transition(.activityRow)
-        .animation(Motion.activityPhase, value: state)
+        .motionAnimation(Motion.activityPhase, value: state)
     }
 }
 
