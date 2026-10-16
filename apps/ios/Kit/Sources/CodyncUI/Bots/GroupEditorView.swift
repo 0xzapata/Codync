@@ -4,6 +4,7 @@ import SwiftUI
 /// Create a group chat, or change its name, what it's for and who's in it. Bots are
 /// picked like recipients: chips on top, a search, and the bots not in it yet.
 public struct GroupEditorView: View {
+    var motion = MotionGate()
     @Environment(BotStore.self) private var model
     @Environment(\.dismissModal) private var dismiss
     /// The group being edited; nil creates one.
@@ -49,7 +50,7 @@ public struct GroupEditorView: View {
                 VStack(alignment: .leading, spacing: 28) {
                     VStack(spacing: 10) {
                         GroupAvatar(members: picked, size: 84)
-                            .animation(Motion.layout, value: members)
+                            .motionAnimation(Motion.layout, value: members)
                         TextField(defaultName, text: $name)
                             .textFieldStyle(.plain)
                             .font(.title2.weight(.semibold))
@@ -90,7 +91,7 @@ public struct GroupEditorView: View {
                                 .accessibilityLabel("Add \(bot.name)")
                             }
                         } else if !candidates.isEmpty {
-                            Button { withAnimation(Motion.layout) { adding = true } } label: {
+                            Button { motion.animate(Motion.layout) { adding = true } } label: {
                                 HStack(spacing: 14) {
                                     Image(systemName: "plus").font(.system(size: 16)).foregroundStyle(Palette.secondary).frame(width: 32)
                                     Text("Add Member").foregroundStyle(Palette.secondary)
@@ -106,7 +107,7 @@ public struct GroupEditorView: View {
                             .foregroundStyle(Palette.tertiary)
                             .padding(.top, 10)
                     }
-                    .animation(Motion.layout, value: members)
+                    .motionAnimation(Motion.layout, value: members)
                     if let error {
                         Text(error).font(.footnote).foregroundStyle(Palette.danger).transition(.opacity)
                     }
@@ -133,7 +134,7 @@ public struct GroupEditorView: View {
     }
 
     private func toggle(_ id: String) {
-        withAnimation(Motion.layout) {
+        motion.animate(Motion.layout) {
             if members.contains(id) { members.removeAll { $0 == id } } else { members.append(id) }
         }
         query = ""
@@ -169,7 +170,7 @@ public struct GroupEditorView: View {
                 }
                 dismiss()
             } catch {
-                withAnimation(Motion.fade) { self.error = error.localizedDescription }
+                motion.animate(Motion.fade) { self.error = error.localizedDescription }
             }
             saving = false
         }

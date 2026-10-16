@@ -318,6 +318,7 @@ public extension BotStore {
 }
 
 struct AvatarPicker: View {
+    var motion = MotionGate()
     @Binding var shape: String
     @Binding var color: String
 
@@ -329,7 +330,7 @@ struct AvatarPicker: View {
                         CharacterAvatar(shape: s, color: color, size: 36)
                             .padding(4)
                             .background(Circle().strokeBorder(s == shape ? Palette.accent : .clear, lineWidth: 2))
-                            .onTapGesture { withAnimation(Motion.hover) { shape = s } }
+                            .onTapGesture { motion.animate(Motion.hover) { shape = s } }
                             .accessibilityLabel("\(s) shape")
                             .accessibilityAddTraits(s == shape ? .isSelected : [])
                     }
@@ -344,7 +345,7 @@ struct AvatarPicker: View {
                             .frame(width: 26, height: 26)
                             .padding(4)
                             .background(Circle().strokeBorder(c.id == color ? Palette.accent : .clear, lineWidth: 2))
-                            .onTapGesture { withAnimation(Motion.hover) { color = c.id } }
+                            .onTapGesture { motion.animate(Motion.hover) { color = c.id } }
                             .accessibilityLabel(c.label)
                             .accessibilityAddTraits(c.id == color ? .isSelected : [])
                     }

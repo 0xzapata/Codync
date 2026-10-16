@@ -277,6 +277,7 @@ private struct IconLabel: View {
 
 /// Keys the iOS keyboard lacks. Modifiers arm for the next key or click.
 private struct ModifierBar: View {
+    var motion = MotionGate()
     @Binding var armed: [String]
     let press: (String) -> Void
 
@@ -289,7 +290,7 @@ private struct ModifierBar: View {
                 ForEach(Self.modifiers, id: \.0) { name, icon in
                     let on = armed.contains(name)
                     Button {
-                        withAnimation(Motion.hover) {
+                        motion.animate(Motion.hover) {
                             if on { armed.removeAll { $0 == name } } else { armed.append(name) }
                         }
                     } label: {

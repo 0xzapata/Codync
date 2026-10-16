@@ -50,10 +50,11 @@ struct CodyncApp: App {
                 .overlay {
                     if launching {
                         LaunchSplash(stores: app.accounts.computers.compactMap { app.accounts.store(for: $0.id) }) {
-                            withAnimation(.easeOut(duration: 0.35)) { launching = false }
+                            launching = false
                         }
                     }
                 }
+                .motionAnimation(.easeOut(duration: 0.3), value: launching)
                 .onOpenURL { url in app.open(url) }
                 .onChange(of: onboardingCompleted) { _, done in if done { Analytics.shared.capture(.onboardingCompleted) } }
                 .onChange(of: scenePhase, initial: true) { _, phase in

@@ -29,7 +29,7 @@ struct WidgetSetupDemo: View {
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(Palette.text)
                         .contentTransition(.opacity)
-                        .animation(Motion.fade, value: Self.step(at: t).index)
+                        .motionAnimation(Motion.fade, value: Self.step(at: t).index)
                         .frame(maxWidth: .infinity)
                         .accessibilityHidden(true)
                     controls(t)
@@ -78,7 +78,7 @@ struct WidgetSetupDemo: View {
                     Circle().fill(Palette.accent)
                         .frame(width: scrubbing ? 18 : 14, height: scrubbing ? 18 : 14)
                         .offset(x: x - (scrubbing ? 9 : 7))
-                        .animation(Motion.press, value: scrubbing)
+                        .motionAnimation(Motion.press, value: scrubbing)
                 }
                 .frame(maxHeight: .infinity)
                 .contentShape(Rectangle())

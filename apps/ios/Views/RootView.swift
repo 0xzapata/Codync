@@ -343,7 +343,7 @@ private struct AccessBanners: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, accounts.pendingAccess.isEmpty ? 0 : 8)
-        .animation(Motion.layout, value: accounts.pendingAccess.keys.sorted())
+        .motionAnimation(Motion.layout, value: accounts.pendingAccess.keys.sorted())
         .accessibilityElement(children: .contain)
     }
 }

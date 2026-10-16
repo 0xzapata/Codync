@@ -82,7 +82,7 @@ struct CustomConnectorSheet: View {
             }
         }
         .textFieldStyle(.plain)
-        .animation(Motion.layout, value: mode)
+        .motionAnimation(Motion.layout, value: mode)
     }
 
     private func save() {

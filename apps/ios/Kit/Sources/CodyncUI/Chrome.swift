@@ -55,8 +55,8 @@ public struct IconButtonStyle: ButtonStyle {
                 )
                 .opacity(isEnabled ? 1 : 0.35)
                 .scaleEffect(configuration.isPressed ? Motion.pressScale : 1)
-                .animation(Motion.press, value: configuration.isPressed)
-                .animation(Motion.hover, value: hovering)
+                .motionAnimation(Motion.press, value: configuration.isPressed)
+                .motionAnimation(Motion.hover, value: hovering)
                 .contentShape(Rectangle())
                 .onHover { hovering = $0 }
         }

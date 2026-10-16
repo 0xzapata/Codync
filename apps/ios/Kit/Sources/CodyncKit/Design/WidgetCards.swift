@@ -88,7 +88,7 @@ public struct ProviderWidgetCard: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         // A new timeline entry rolls the numbers and fills the ticks instead of swapping.
-        .animation(Motion.activityPhase, value: provider)
+        .motionAnimation(Motion.activityPhase, value: provider)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(provider.name) usage")
         .accessibilityValue(accessibleUsage)
@@ -216,7 +216,7 @@ public struct BotsWidgetCard: View {
         .foregroundStyle(Palette.text)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         // A new timeline entry moves rows into their new order and morphs counts and states.
-        .animation(Motion.activityPhase, value: bots)
+        .motionAnimation(Motion.activityPhase, value: bots)
     }
 
     private func botRows(limit: Int) -> some View {
@@ -313,7 +313,7 @@ public struct BotsTeamCard: View {
             GridRow { tile(2); tile(3) }
         }
         // A new timeline entry lets each bot change its mood in place.
-        .animation(Motion.activityPhase, value: slots)
+        .motionAnimation(Motion.activityPhase, value: slots)
     }
 
     @ViewBuilder private func tile(_ index: Int) -> some View {

@@ -21,6 +21,7 @@ struct AccountSwitcherButton: View {
 
 /// Who you're signed in as, the other accounts on this iPhone, and the way to the computers.
 struct AccountSwitcherView: View {
+    var motion = MotionGate()
     @Environment(AppStore.self) private var app
     @Environment(AccountSession.self) private var account
     @State private var showSettings = false
@@ -83,11 +84,11 @@ struct AccountSwitcherView: View {
                 }
             }
             .background(Palette.background)
-            .animation(Motion.fade, value: account.isBusy)
+            .motionAnimation(Motion.fade, value: account.isBusy)
         }
-        .animation(Motion.layout, value: account.userID)
-        .animation(Motion.fade, value: account.errorMessage)
-        .onChange(of: account.userID) { _, _ in withAnimation(Motion.layout) { addingAccount = false } }
+        .motionAnimation(Motion.layout, value: account.userID)
+        .motionAnimation(Motion.fade, value: account.errorMessage)
+        .onChange(of: account.userID) { _, _ in motion.animate(Motion.layout) { addingAccount = false } }
         .hidesSystemNavigationBar()
         .navigationDestination(isPresented: $showSettings) { SettingsView(pushed: true) }
         .codyncSheet(isPresented: $pairing) { PairingView(inModal: true) }
@@ -147,7 +148,7 @@ struct AccountSwitcherView: View {
                     .accessibilityAddTraits(current ? .isSelected : [])
                 }
                 if account.supportsMultipleAccounts {
-                    Button { withAnimation(Motion.layout) { addingAccount.toggle() } } label: {
+                    Button { motion.animate(Motion.layout) { addingAccount.toggle() } } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundStyle(Palette.secondary)
@@ -185,7 +186,7 @@ struct GoogleSignInButton: View {
         }
         .buttonStyle(.secondary)
         .disabled(account.isBusy)
-        .animation(Motion.fade, value: account.isBusy)
+        .motionAnimation(Motion.fade, value: account.isBusy)
     }
 }
 

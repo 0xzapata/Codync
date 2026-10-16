@@ -130,7 +130,7 @@ private struct InstallPage: View {
                         Hint("Every install option")
                         CommandBlock("https://www.codync.dev/#install")
                     }
-                    .animation(Motion.layout, value: os)
+                    .motionAnimation(Motion.layout, value: os)
 
                     DemoButton()
                 }
@@ -160,6 +160,7 @@ private struct Hint: View {
 
 /// A terminal command with a copy button.
 private struct CommandBlock: View {
+    var motion = MotionGate()
     let command: String
     @State private var copied = false
 
@@ -176,10 +177,10 @@ private struct CommandBlock: View {
                 .contentTransition(.opacity)
             IconButton(copied ? "Copied" : "Copy", systemImage: copied ? "checkmark" : "doc.on.doc") {
                 UIPasteboard.general.string = command
-                withAnimation(Motion.morph) { copied = true }
+                motion.animate(Motion.morph) { copied = true }
                 Task {
                     try? await Task.sleep(for: .seconds(1.5))
-                    withAnimation(Motion.morph) { copied = false }
+                    motion.animate(Motion.morph) { copied = false }
                 }
             }
             .contentTransition(.symbolEffect(.replace))
@@ -188,7 +189,7 @@ private struct CommandBlock: View {
         .padding(.trailing, 4)
         .padding(.vertical, 4)
         .background(Palette.codeBackground, in: RoundedRectangle(cornerRadius: 12))
-        .animation(Motion.fade, value: command)
+        .motionAnimation(Motion.fade, value: command)
     }
 }
 
@@ -302,7 +303,7 @@ private struct ScanPage: View {
         }
         .aspectRatio(1, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
-        .animation(Motion.fade, value: pairing)
+        .motionAnimation(Motion.fade, value: pairing)
     }
 
     private func pair(_ text: String) {

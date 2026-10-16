@@ -2,6 +2,7 @@ import CodyncKit
 import SwiftUI
 
 struct MemoryCard: View {
+    var motion = MotionGate()
     let botId: String
     @Environment(BotStore.self) private var host
     @State private var memory: MemoryStore?
@@ -46,7 +47,7 @@ struct MemoryCard: View {
         HStack(spacing: 8) {
             SearchField("Search memories", text: Binding(get: { memory.query }, set: { memory.search($0) }))
             ChoicePicker(selection: Binding(get: { memory.filter }, set: { filter in
-                withAnimation(Motion.layout) { memory.search(memory.query, filter: filter) }
+                motion.animate(Motion.layout) { memory.search(memory.query, filter: filter) }
             }), options: Self.filters, fill: Palette.bubbleAgent)
         }
         if let error = memory.error { Text(error).foregroundStyle(Palette.danger).textSelection(.enabled) }
@@ -95,12 +96,12 @@ struct MemoryCard: View {
         DropdownMenu {
             [MenuItem("Refresh", icon: "arrow.clockwise") { Task { await memory.load() } },
              MenuItem("Export", icon: "square.and.arrow.up") {
-                 withAnimation(Motion.layout) { backupMode = .export }
+                 motion.animate(Motion.layout) { backupMode = .export }
                  Task { await memory.export() }
              },
-             MenuItem("Import", icon: "square.and.arrow.down") { withAnimation(Motion.layout) { backupMode = .import } },
+             MenuItem("Import", icon: "square.and.arrow.down") { motion.animate(Motion.layout) { backupMode = .import } },
              MenuItem("Forget everything", icon: "trash", destructive: true, divider: true) {
-                 withAnimation(Motion.layout) { confirmClear = true }
+                 motion.animate(Motion.layout) { confirmClear = true }
              }]
         } label: { menuLabel("More") }
     }
@@ -111,7 +112,7 @@ struct MemoryCard: View {
                 Task { await memory.action("pinMemory", fact: fact) }
             },
              MenuItem("History", icon: "clock.arrow.circlepath") {
-                 withAnimation(Motion.layout) { showDetail = true }
+                 motion.animate(Motion.layout) { showDetail = true }
                  Task { await memory.inspect(fact) }
              }]
             + (fact.reviewAfter != nil ? [MenuItem("Mark reviewed", icon: "checkmark.circle") {
@@ -134,7 +135,7 @@ struct MemoryCard: View {
     }
 
     private func openEditor(_ fact: MemoryFact? = nil) {
-        withAnimation(Motion.layout) { editor = MemoryEditorTarget(draft: MemoryDraft(botId: botId, fact: fact)) }
+        motion.animate(Motion.layout) { editor = MemoryEditorTarget(draft: MemoryDraft(botId: botId, fact: fact)) }
     }
 }
 

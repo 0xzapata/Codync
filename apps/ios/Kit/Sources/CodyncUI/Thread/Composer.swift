@@ -98,8 +98,8 @@ struct Composer: View {
             }
             field
         }
-        .animation(Motion.layout, value: suggestions.map(\.id))
-        .animation(Motion.layout, value: skillSuggestions.map(\.id))
+        .motionAnimation(Motion.layout, value: suggestions.map(\.id))
+        .motionAnimation(Motion.layout, value: skillSuggestions.map(\.id))
     }
 
     private var fieldPadding: CGFloat { 10 }
@@ -122,9 +122,9 @@ struct Composer: View {
             }
             .glass(in: RoundedRectangle(cornerRadius: 24, style: .continuous))
             // Lines, not the text: an animated transaction on every keystroke breaks IME composition.
-            .animation(Motion.layout, value: draft.count(where: \.isNewline))
+            .motionAnimation(Motion.layout, value: draft.count(where: \.isNewline))
         }
-        .animation(Motion.layout, value: files.map(\.id))
+        .motionAnimation(Motion.layout, value: files.map(\.id))
         .dropDestination(for: PickedFile.self) { picked, _ in
             guard canAttach else { return false }
             append(picked.map(\.file))
@@ -210,7 +210,7 @@ struct Composer: View {
                 .padding(.vertical, fieldPadding)
             trailingButton
                 .padding(.bottom, max(0, (textLineHeight + 2 * fieldPadding - buttonSize) / 2))
-                .animation(Motion.layout, value: isEmpty)
+                .motionAnimation(Motion.layout, value: isEmpty)
         }
         .padding(.leading, 18)
         .padding(.trailing, 6)

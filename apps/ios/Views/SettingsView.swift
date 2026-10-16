@@ -5,6 +5,7 @@ import SwiftUI
 /// Every computer this iPhone can use or ask for — paired here and in the account, merged by
 /// computer ID — plus settings for the selected account.
 struct SettingsView: View {
+    var motion = MotionGate()
     /// Pushed inside Accounts rather than opened as its own sheet.
     var pushed = false
     @Environment(AppStore.self) private var app
@@ -100,7 +101,7 @@ struct SettingsView: View {
                             }
                             Spacer()
                             IconButton("Unhide", systemImage: "eye") {
-                                withAnimation(Motion.layout) { store.setHidden(bot, false) }
+                                motion.animate(Motion.layout) { store.setHidden(bot, false) }
                             }
                         }
                     }

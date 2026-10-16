@@ -5,6 +5,7 @@ import SwiftUI
 /// skills for the bots on one computer (the store in the environment). Installing happens on that
 /// computer; each bot turns connectors and skills on in its settings.
 public struct MarketplaceView: View {
+    var motion = MotionGate()
     @Environment(BotStore.self) private var model
     @State private var search = ""
     /// Bumped on each submitted search, so every section searches again.
@@ -58,7 +59,7 @@ public struct MarketplaceView: View {
     public var body: some View {
         ZStack {
             if showInstalled {
-                InstalledView { withAnimation(Motion.layout) { showInstalled = false } }
+                InstalledView { motion.animate(Motion.layout) { showInstalled = false } }
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             } else {
                 page.transition(.move(edge: .leading).combined(with: .opacity))
@@ -105,7 +106,7 @@ public struct MarketplaceView: View {
                         .padding(.horizontal, -24)
                         if agents.count > agentLimit {
                             Button("Load more agents") {
-                                withAnimation(Motion.fade) { agentLimit += 10 }
+                                motion.animate(Motion.fade) { agentLimit += 10 }
                             }
                             .buttonStyle(SecondaryButtonStyle())
                             .frame(maxWidth: .infinity)
@@ -158,7 +159,7 @@ public struct MarketplaceView: View {
                         }
                     }
                 }
-                Button { withAnimation(Motion.layout) { showCredentials = true } } label: {
+                Button { motion.animate(Motion.layout) { showCredentials = true } } label: {
                     Label("Credentials", systemImage: "lock.shield")
                 }
                 .buttonStyle(SecondaryButtonStyle())
@@ -233,7 +234,7 @@ public struct MarketplaceView: View {
             }
             .layoutPriority(1)
             if installedCount > 0 {
-                Button { withAnimation(Motion.layout) { showInstalled = true } } label: {
+                Button { motion.animate(Motion.layout) { showInstalled = true } } label: {
                     HStack(spacing: 8) {
                         HStack(spacing: -8) {
                             ForEach(model.installedConnectors.prefix(3)) { c in
@@ -304,7 +305,7 @@ public struct MarketplaceView: View {
     private func loadMoreConnectors() async {
         guard !loadingMore, !loadingConnectors else { return }
         if connectors.hasHiddenItems {
-            withAnimation(Motion.fade) { connectors.revealMore() }
+            motion.animate(Motion.fade) { connectors.revealMore() }
             return
         }
         guard let cursor = connectorCursor else { return }
@@ -314,7 +315,7 @@ public struct MarketplaceView: View {
         do {
             let page = try await model.marketConnectors(search: connectorQuery, cursor: cursor)
             guard !Task.isCancelled, connectorRequest == request else { return }
-            withAnimation(Motion.fade) {
+            motion.animate(Motion.fade) {
                 connectors.append(page.items)
                 connectors.revealMore()
             }
