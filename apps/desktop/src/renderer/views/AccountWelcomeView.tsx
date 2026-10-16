@@ -41,7 +41,7 @@ export function AccountWelcomeView({ onContinue }: { onContinue: () => void }) {
   const rise = (shown: boolean): CSSProperties => ({
     opacity: shown ? 1 : 0,
     transform: shown ? 'none' : 'translateY(14px)',
-    transition: 'opacity 0.6s cubic-bezier(0.34, 1.3, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1)',
+    transition: 'opacity var(--layout), transform var(--layout)',
   })
 
   return (
@@ -125,12 +125,18 @@ function WelcomeCrew({ shown }: { shown: boolean }) {
           key={m.shape}
           style={{
             position: 'absolute', left: '50%', top: '50%',
-            transform: `translate(calc(-50% + ${m.x}px), calc(-50% + ${m.y + (reduce ? 0 : Math.sin(t * 1.3 + i * 1.7) * 5)}px)) scale(${shown ? 1 : 0.3})`,
+            // The idle bob rewrites `transform` on every frame, so the entrance scale cannot live
+            // here: a `scale` transition inside `transform` never fires (that was the bug), and a
+            // `transform` transition would damp the bob. It also cannot be a sibling `scale`
+            // property, which composes outside `transform` and would scale the offsets below.
+            transform: `translate(calc(-50% + ${m.x}px), calc(-50% + ${m.y + (reduce ? 0 : Math.sin(t * 1.3 + i * 1.7) * 5)}px))`,
             opacity: shown ? 1 : 0,
-            transition: `opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.07}s, scale 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.07}s`,
+            transition: `opacity var(--layout) ${i * 0.07}s`,
           }}
         >
-          <CharacterAvatar shape={m.shape} color={m.color} size={m.size} mood={m.mood} />
+          <div style={{ scale: shown ? '1' : '0.3', transition: `scale var(--layout) ${i * 0.07}s` }}>
+            <CharacterAvatar shape={m.shape} color={m.color} size={m.size} mood={m.mood} />
+          </div>
         </div>
       ))}
     </div>
@@ -146,7 +152,7 @@ function WelcomeChatGlimpse({ shown }: { shown: boolean }) {
     const timer = setTimeout(() => setReplied(true), reduce ? 0 : 1600)
     return () => clearTimeout(timer)
   }, [shown, reduce])
-  const rise: CSSProperties = { opacity: shown ? 1 : 0, transform: shown ? 'none' : 'translateY(14px)', transition: 'opacity 0.6s, transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1)' }
+  const rise: CSSProperties = { opacity: shown ? 1 : 0, transform: shown ? 'none' : 'translateY(14px)', transition: 'opacity var(--layout), transform var(--layout)' }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end', ...rise }}>
@@ -155,7 +161,7 @@ function WelcomeChatGlimpse({ shown }: { shown: boolean }) {
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, ...rise }}>
         <CharacterAvatar shape="blob" color="blue" size={28} mood={replied ? 'idle' : 'working'} />
         {replied ? (
-          <span style={{ ...font('subheadline'), color: 'var(--text)', padding: '9px 14px', background: 'var(--bubble-agent)', borderRadius: 18, animation: 'bubble-in 0.45s cubic-bezier(0.34, 1.3, 0.64, 1) both', transformOrigin: 'bottom left' }}>
+          <span style={{ ...font('subheadline'), color: 'var(--text)', padding: '9px 14px', background: 'var(--bubble-agent)', borderRadius: 18, animation: 'bubble-in var(--layout) both', transformOrigin: 'bottom left' }}>
             Done. It raced the session refresh; tests pass on fix/login.
           </span>
         ) : (
