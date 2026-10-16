@@ -16,5 +16,6 @@ check() { # $1 = pattern, $2 = dir
     fi
 }
 check 'withAnimation(' 'apps/ios'
+check 'withAnimation *{' 'apps/ios'
 check '\.animation(' 'apps/ios'
 exit $fail
